@@ -25,10 +25,10 @@ while True:
                     elif cont == 9:
                         listCpf.append('-')
                 break
-            x = ''
+            conCPF = ''
             for i in listCpf:
-                x = x + i
-                cpf = x
+                conCPF = conCPF + i
+                cpf = conCPF
 
             if cpf in cadastrosPessoa.keys():
                 print('\nCPF inválido, por favor digite o seu CPF!')
