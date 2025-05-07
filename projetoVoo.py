@@ -1,45 +1,55 @@
 cadastrosPessoa = dict()
 
-pessoas = 0
-
 while True:
-    print('\nEscolha uma das opções a baixo: \n'
-    '\n1 - cadastrar'
-    '\n2 - informações')
+    print('''Escolha uma das opções a baixo:
+1 - cadastrar
+2 - informações''')
     option = input('\n--> ')
     if option == '1':
         numPessoas = int(input('Número de pessoas que deseja cadastrar: '))
 
+        pessoas = 0
+
         while pessoas < numPessoas:
             print(f'\n{pessoas + 1}° Pessoa')
+
             nome = input('Digite seu nome: ').title()
+
+            while nome == '' or nome.isalpha() == False or len(nome) < 3 or len(nome) > 50:
+                print('Nome inválido, por favor digite o seu nome!')
+                nome = input('Digite seu nome: ').title()
+
             cpf = input('Digite seu CPF: ')
-            while cpf.count('.') == 0 or cpf.count('-') == 0:
-                listCpf = []
-                cont = 0
-                for c in cpf:
-                    cont+=1
-                    listCpf.append(c)
-                    if cont == 3 or cont == 6:
-                        listCpf.append('.')
-                    elif cont == 9:
-                        listCpf.append('-')
+
+            listCpf = []
+
+            while len(cpf) == 11 and cpf.isdigit() == True:
+                cpf = cpf[0:3] + '.' + cpf[3:6] + '.' + cpf[6:9] + '-' + cpf[9:11]
+                listCpf.append(cpf)
                 break
-            conCPF = ''
-            for i in listCpf:
-                conCPF = conCPF + i
-                cpf = conCPF
 
             if cpf in cadastrosPessoa.keys():
                 print('\nCPF inválido, por favor digite o seu CPF!')
             else:
                 idade = input('Digite sua idade: ')
-                cidade = input('Digite sua cidade: ')
 
+                while idade.isdigit() == False or int(idade) < 0 or int(idade) > 120:
+                    print('Idade inválida, por favor digite a sua idade!')
+                    idade = input('Digite sua idade: ')
+
+                telefone = input('Digite telefone: ')
+
+                listTelefone = []
+
+                while telefone.isdigit() == True and len(telefone) == 11:
+                    telefone = '(' + telefone[0:2] + ')' + telefone[2:7] + '-' + telefone[7:11]
+                    listTelefone.append(telefone)
+                    break
+                
                 cadastrosPessoa[cpf] = {
                     'nome': nome,
                     'idade': idade,
-                    'cidade origem': cidade
+                    'telefone': telefone
                 }
                 pessoas += 1
             ##input('Para onde vão: ')
@@ -54,7 +64,7 @@ while True:
                     print(f'\ncpf: {c}')
                     print(f'nome: {dados['nome']}')
                     print(f'idade: {dados['idade']}')
-                    print(f'cidade origem: {dados['cidade origem']}')
+                    print(f'telefone: {dados['telefone']}')
             elif optionInfo == '2':
                 print('voos**')
             elif optionInfo == '3':
