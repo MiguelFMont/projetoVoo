@@ -1,4 +1,5 @@
 cadastrosPessoa = dict()
+listCaracteresEspeciais = ['.', '-', '(', ')',] 
 
 while True:
     print('''Escolha uma das opções a baixo:
@@ -23,10 +24,27 @@ while True:
 
             listCpf = []
 
+            while len(cpf) == 14:
+                contNumCpf = 0
+                contCarCpf = 0
+                for i in cpf:
+                    if i.isdigit() == True:
+                        contNumCpf += 1
+                    if listCaracteresEspeciais.count(i) == 1:
+                        contNumCpf += 1
+                if contNumCpf == 11 and contCarCpf == 3 and cpf[3] == '.' and cpf[7] == '.' and cpf[11] == '-':
+                    break
+                else:
+                    print('CPF inválido, por favor digite o seu CPF!')
+                    cpf = input('Digite seu CPF: ')
+
             while len(cpf) == 11 and cpf.isdigit() == True:
                 cpf = cpf[0:3] + '.' + cpf[3:6] + '.' + cpf[6:9] + '-' + cpf[9:11]
                 listCpf.append(cpf)
                 break
+            else:   
+                print('CPF inválido, por favor digite o seu CPF!')
+                cpf = input('Digite seu CPF: ')
 
             if cpf in cadastrosPessoa.keys():
                 print('\nCPF inválido, por favor digite o seu CPF!')
