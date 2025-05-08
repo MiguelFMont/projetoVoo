@@ -1,82 +1,49 @@
-import os
-
 cadastrosPessoa = dict()
 voos = dict()
 
 listCaracteresEspeciais = ['.', '-', '(', ')',] 
 listNumVerificacaoOption = ['1', '2', '3', '4']
 listNumVerificacaoOptionVoo = ['1', '2', '3', '4', '5']
-dicRegioesBrasil = {
-    "Norte": {
-        "estados": [
-            "Acre (AC)", "Amapá (AP)", "Amazonas (AM)",
-            "Pará (PA)", "Rondônia (RO)", "Roraima (RR)", "Tocantins (TO)"
-        ],
-        "companhias_aereas": [
-            "Azul Linhas Aéreas",
-            "GOL Linhas Aéreas",
-            "LATAM Brasil"
-        ]
-    },
-    "Nordeste": {
-        "estados": [
-            "Alagoas (AL)", "Bahia (BA)", "Ceará (CE)", "Maranhão (MA)",
-            "Paraíba (PB)", "Pernambuco (PE)", "Piauí (PI)",
-            "Rio Grande do Norte (RN)", "Sergipe (SE)"
-        ],
-        "companhias_aereas": [
-            "GOL Linhas Aéreas",
-            "LATAM Brasil",
-            "Azul Linhas Aéreas"
-        ]
-    },
-    "Centro-Oeste": {
-        "estados": [
-            "Distrito Federal (DF)", "Goiás (GO)",
-            "Mato Grosso (MT)", "Mato Grosso do Sul (MS)"
-        ],
-        "companhias_aereas": [
-            "GOL Linhas Aéreas",
-            "LATAM Brasil",
-            "Azul Linhas Aéreas",
-            "Voepass" 
-        ]
-    },
-    "Sudeste": {
-        "estados": [
-            "Espírito Santo (ES)", "Minas Gerais (MG)",
-            "Rio de Janeiro (RJ)", "São Paulo (SP)"
-        ],
-        "companhias_aereas": [
-            "GOL Linhas Aéreas",  
-            "LATAM Brasil",       
-            "Azul Linhas Aéreas",
-            "Voepass"
-        ]
-    },
-    "Sul": {
-        "estados": [
-            "Paraná (PR)", "Rio Grande do Sul (RS)", "Santa Catarina (SC)"
-        ],
-        "companhias_aereas": [
-            
-            "LATAM Brasil",
-            "GOL Linhas Aéreas"
-        ]
-    }
-}
 
+companhiasAereasBrasil = ['Gol', 'Latam', 'Azul', 'TAM']
+
+estadosParaRegião = {
+    'Acre(AC)': 'Norte',
+    'Alagoas(AL)': 'Nordeste',
+    'Amapá(AP)': 'Norte',
+    'Amazonas(AM)': 'Norte',
+    'Bahia(BA)': 'Nordeste',
+    'Ceará(CE)': 'Nordeste',
+    'Distrito Federal(DF)': 'Centro-Oeste',
+    'Espírito Santo(ES)': 'Sudeste',
+    'Goiás(GO)': 'Centro-Oeste',
+    'Maranhão(MA)': 'Nordeste',
+    'Mato Grosso do Sul(MS)': 'Centro-Oeste',
+    'Mato Grosso(MT)': 'Centro-Oeste',
+    'Minas Gerais(MG)': 'Sudeste',
+    'Pará(PA)': 'Norte',
+    'Paraíba(PB)': 'Nordeste',
+    'Paraná(PR)': 'Sul',
+    'Pernambuco(PE)': 'Nordeste',
+    'Piauí(PI)': 'Nordeste',
+    'Rio de Janeiro(RJ)': 'Sudeste',
+    'Rio Grande do Norte(RN)': 'Nordeste',
+    'Rio Grande do Sul(RS)': 'Sul',
+    'Rondônia(RO)': 'Norte',
+    'Roraima(RR)': 'Norte',
+    'Santa Catarina(SC)': 'Sul',
+    'São Paulo(SP)': 'Sudeste',
+    'Sergipe(SE)': 'Nordeste',
+    'Tocantins(TO)': 	'Norte'
+}
 
 while True:
     print('''Escolha uma das opções a baixo:
-          
 1 - Cadastrar um passageiro
 2 - Passageiros cadastrados
 3 - Voos
 4 - sair''')
     option = input('\n--> ')
-    os.system('cls' if os.name == 'nt' else 'clear')
-
     while len(option) != 1 or listNumVerificacaoOption.count(option) == 0:
         print('Opção inválida, por favor digite uma opção válida!')
         option = input('--> ')
@@ -147,7 +114,7 @@ while True:
                     pessoas += 1
                 ##input('Para onde vão: ')
         elif option == '2':
-                os.system('cls' if os.name == 'nt' else 'clear')
+            while True:
                 for c, dados in cadastrosPessoa.items():
                     print('------------------')
                     print(f'cpf: {c}')
@@ -157,7 +124,6 @@ while True:
                     print(f'telefone: {dados['telefone']}')
                     print('------------------')
         elif option == '3':
-            os.system('cls' if os.name == 'nt' else 'clear')
             while True:
                 print('''Escolha uma das opções a baixo:
                     
@@ -173,31 +139,25 @@ while True:
                 else:
 
                     if optionVoo == '1':
-
                         print('CADASTRO DE VOO\n')
-
                         origem = input('Digite a origem do voo: ').title()
-
-                        while origem == '' or origem.isdigit() == True or len(origem) < 2 or len(origem) > 50:
-
+                        while origem == '' or origem.isalpha() == False or len(origem) < 2 or len(origem) > 50:
                             print('Origem inválida, por favor digite a origem do voo!')
                             origem = input('Digite a origem do voo: ').title()
-                        else:
-                            os.system('cls' if os.name == 'nt' else 'clear')
-                            for regiao in dicRegioesBrasil:
-                                for estado in dicRegioesBrasil[regiao]:
-                                    for nomeEstado in dicRegioesBrasil[regiao][estado]:
-                                        if origem in nomeEstado:
-                                            print(f'Origem: {nomeEstado}')
-                                            print(f'Região: {regiao}')
-                                            print(f'Companhias Aéreas:')
-                                            for companhia in dicRegioesBrasil[regiao]['companhias_aereas']:
-                                                print(f'- {companhia}')
-                                            break
-                                        
+
+                        destino = input('Digite o destino do voo: ').title()
+                        if destino == origem:
+                            print('Origem e destino não podem ser iguais!')
                             destino = input('Digite o destino do voo: ').title()
-                            
-                            
+                        if destino  == estadosParaRegião.keys():
+                            print('oi')
+                            if estadosParaRegião[destino] == estadosParaRegião.values('Sul'):
+                                print('A região Sul não possui voos diretos!')
+                                destino = input('Digite o destino do voo: ').title()
+
+
+
+
 
         elif option == '4':
             print('Finalizando app...')
