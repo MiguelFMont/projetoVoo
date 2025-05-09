@@ -192,6 +192,7 @@ contVoo = 0
 
 while True:
     print('''Escolha uma das opções a baixo:
+
 1 - Cadastrar um passageiro
 2 - Passageiros cadastrados
 3 - Voos

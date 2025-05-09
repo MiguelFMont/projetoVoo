@@ -56,30 +56,6 @@ dicRegioesBrasil = {
         ]
     }
 }
-print(dicRegioesBrasil.values())
-while True:
-    origem = input("Digite o estado de origem (ou 'sair' para encerrar): ")
-    if origem.lower() == 'sair':
-        print("Encerrando o programa.")
-        break
 
-    # Normaliza a entrada do usuário (remove espaços extras e coloca em maiúsculas)
-    origem = origem.strip()
 
-    # Verifica se o estado está presente em alguma região
-    estado_encontrado = False
-    for regiao in dicRegioesBrasil.values():
-        for estado in regiao['estados']:
-            # Verifica se a entrada é exatamente igual ao estado ou à UF
-            if origem.lower() == estado.lower() or origem.upper() in estado:
-                estado_encontrado = True
-                origem = estado  # Atualiza para o nome completo do estado
-                break
-        if estado_encontrado:
-            break
-
-    if not estado_encontrado:
-        print("Estado inválido. Tente novamente.")
-    else:
-        print(f"Estado válido: {origem}.")
     
