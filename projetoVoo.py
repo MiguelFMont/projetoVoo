@@ -436,6 +436,10 @@ while True:
                                                 origem = nomeEstado
                                                 verifOrigem = True
                                                 break
+                            if verifOrigem == False:
+                                print('Origem não encontrada, por favor, digite a origem do voo!')
+                                input('Pressione ENTER para continuar...')
+                                continue
                         destino = input('Digite o destino do voo: ').title()
                         voos[destino] = {
                             'origem': origem,
