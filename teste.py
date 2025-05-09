@@ -1,4 +1,4 @@
-dicTeste = {
+dicRegioesBrasil = {
     'teste1': {
         'teste2': [
             'rio de janeiro', 'São Paulo'
@@ -6,14 +6,15 @@ dicTeste = {
     },
 
 }
-
-input = input('').title()
-for i in dicTeste:
-    print(i)
-    for j in dicTeste[i]:
-        print(j)
-        for k in dicTeste[i][j]:
-            if input in k:
-                print(k)
-            
+origem = ''
+for regiao, in dicRegioesBrasil:
+    for estado in dicRegioesBrasil[regiao]:
+        for nomeEstado in dicRegioesBrasil[regiao][estado]:
+            if origem in nomeEstado:
+                print(f'Origem: {nomeEstado}')
+                print(f'Região: {regiao}')
+                print(f'Companhias Aéreas:')
+                for companhia in dicRegioesBrasil[regiao]['companhias_aereas']:
+                    print(f'- {companhia}')
+                break
             

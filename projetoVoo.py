@@ -4,8 +4,8 @@ cadastrosPessoa = dict()
 voos = dict()
 
 listCaracteresEspeciais = ['.', '-', '(', ')',] 
-listNumVerificacaoOption = ['1', '2', '3', '4']
-listNumVerificacaoOptionVoo = ['1', '2', '3', '4', '5']
+listNumVerificacaoOptions = ['1', '2', '3', '4', '5']
+
 dicRegioesBrasil = {
     "Norte": {
         "estados": [
@@ -77,7 +77,7 @@ while True:
     option = input('\n--> ')
     os.system('cls' if os.name == 'nt' else 'clear')
 
-    while len(option) != 1 or listNumVerificacaoOption.count(option) == 0:
+    while len(option) != 1 or option not in listNumVerificacaoOptions[0:4]:
         print('Opção inválida, por favor digite uma opção válida!')
         option = input('--> ')
     else:
@@ -89,69 +89,122 @@ while True:
             while pessoas < numPessoas:
                 print(f'\n{pessoas + 1}° Pessoa')
 
-                nome = input('Digite seu nome: ').title()
+                verifNome = False
 
-                while nome == '' or nome.isalpha() == False or len(nome) < 3 or len(nome) > 50:
-                    print('Nome inválido, por favor digite o seu nome!')
+                while verifNome == False:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     nome = input('Digite seu nome: ').title()
 
-                cpf = input('Digite seu CPF: ')
+                    contEspacosVazios = 0
+                    contInvalido = 0
 
-                listCpf = []
+                    for caracter in nome:
+                        if not caracter.isalpha() or caracter.isspace():
+                            contInvalido += 1
 
-                while len(cpf) == 14:
-                    contNumCpf = 0
-                    contCarCpf = 0
-                    for i in cpf:
-                        if i.isdigit() == True:
-                            contNumCpf += 1
-                        if listCaracteresEspeciais.count(i) == 1:
-                            contNumCpf += 1
-                    if contNumCpf == 11 and contCarCpf == 3 and cpf[3] == '.' and cpf[7] == '.' and cpf[11] == '-':
-                        break
-                    else:
-                        print('CPF inválido, por favor digite o seu CPF!')
-                        cpf = input('Digite seu CPF: ')
+                    if contInvalido > 0:
+                        os.system('cls')
+                        print(f'O nome não pode conter números ou caracteres especiais, por favor, digite novamente!\n')
+                        continue
 
-                while len(cpf) == 11 and cpf.isdigit() == True:
-                    cpf = cpf[0:3] + '.' + cpf[3:6] + '.' + cpf[6:9] + '-' + cpf[9:11]
-                    listCpf.append(cpf)
-                    break
-                else:   
-                    print('CPF inválido, por favor digite o seu CPF!')
+                    if len(nome) < 15:
+                        os.system('cls')
+                        print(f'O nome não pode conter mais de 5 espaços nem conter menos que 10 caracteres!\n')
+                        contEspacosVazios = 0
+                        continue
+
+                    if nome == '':
+                        os.system('cls')
+                        print(f'O nome não pode conter somente espaços vazios, por favor, digite novamente!\n')
+                        continue
+        
+                    for i in nome:  
+                        if i == ' ':
+                            contEspacosVazios += 1
+
+                    if len(nome) == (contEspacosVazios):
+                            os.system('cls')
+                            print(f'O nome não pode conter somente espaços vazios, por favor, digite novamente!\n')
+                            contEspacosVazios = 0
+                            continue
+                    verifNome = True
+
+                verifCpf = False
+
+                while verifCpf == False:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     cpf = input('Digite seu CPF: ')
 
-                if cpf in cadastrosPessoa.keys():
-                    print('\nCPF inválido, por favor digite o seu CPF!')
-                else:
+                    if len(cpf) == 14:
+                        contNumCpf = 0
+                        contCarCpf = 0
+                        for i in cpf:
+                            if i.isdigit() == True:
+                                contNumCpf += 1
+                            if listCaracteresEspeciais.count(i) == 1:
+                                contCarCpf += 1
+                        if contNumCpf == 11 and contCarCpf == 3 and cpf[3] == '.' and cpf[7] == '.' and cpf[11] == '-':
+                            if cpf in cadastrosPessoa.keys():
+                                print('\nCPF já cadastrado! Por favor, digite outro CPF!')
+                                input('Pressione ENTER para continuar...')
+                                continue
+                            else:
+                                verifCpf = True
+                                continue
+                        else:
+                            print('CPF inválido, por favor digite o seu CPF!')
+                            input('Pressione ENTER para continuar...')
+                            continue
+
+                    if len(cpf) == 11 and cpf.isdigit() == True:
+                        cpf = cpf[0:3] + '.' + cpf[3:6] + '.' + cpf[6:9] + '-' + cpf[9:11]
+                        if cpf in cadastrosPessoa.keys():
+                            print('\nCPF já cadastrado! Por favor, digite outro CPF!')
+                            input('Pressione ENTER para continuar...')
+                            continue
+                        else:
+                            verifCpf = True
+                            continue
+                    else:   
+                        print('CPF inválido, por favor digite o seu CPF!')
+                        input('Pressione ENTER para continuar...')
+                        continue
+                
+                verifIdade = False
+
+                while verifIdade == False:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     idade = input('Digite sua idade: ')
-
-                    while idade.isdigit() == False or int(idade) < 0 or int(idade) > 120:
+                    if idade.isdigit() == False or int(idade) < 0 or int(idade) > 120:
                         print('Idade inválida, por favor digite a sua idade!')
-                        idade = input('Digite sua idade: ')
+                        continue
+                    else:
+                        verifIdade = True
 
+                verifTelefone = False
+                while verifTelefone == False:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     telefone = input('Digite telefone: ')
 
-                    listTelefone = []
-
-                    while telefone.isdigit() == True and len(telefone) == 11:
+                    if telefone.isdigit() == True and len(telefone) == 11:
                         telefone = '(' + telefone[0:2] + ')' + telefone[2:7] + '-' + telefone[7:11]
-                        listTelefone.append(telefone)
-                        break
+                        verifTelefone = True
+                    else:
+                        print('Telefone inválido, por favor digite o seu telefone!')
+                        continue
                     
-                    cadastrosPessoa[cpf] = {
-                        'nome': nome,
-                        'idade': idade,
-                        'telefone': telefone
-                    }
-                    pessoas += 1
+                cadastrosPessoa[cpf] = {
+                    'nome': nome,
+                    'idade': idade,
+                    'telefone': telefone
+                }
+                pessoas += 1
                 ##input('Para onde vão: ')
         elif option == '2':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 for c, dados in cadastrosPessoa.items():
                     print('------------------')
                     print(f'cpf: {c}')
-                    print(f'\ncpf: {c}')
                     print(f'nome: {dados['nome']}')
                     print(f'idade: {dados['idade']}')
                     print(f'telefone: {dados['telefone']}')
@@ -167,7 +220,7 @@ while True:
 4- 
                     ''')
                 optionVoo = input('--> ')
-                while len(optionVoo) != 1 or listNumVerificacaoOptionVoo.count(optionVoo) == 0:
+                while len(optionVoo) != 1 or option not in listNumVerificacaoOptions[0:4]:
                     print('Opção inválida, por favor digite uma opção válida!')
                     optionVoo = input('--> ')
                 else:
