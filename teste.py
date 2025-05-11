@@ -57,5 +57,14 @@ dicRegioesBrasil = {
     }
 }
 
+origem = input('Origem: ')
+destino = input('Destino: ')
 
+for i in dicRegioesBrasil:
+    if dicRegioesBrasil[i]['estados'].count(origem) == 1:
+        companhiasOrigem = dicRegioesBrasil[i]['companhiasAereas']
+    if dicRegioesBrasil[i]['estados'].count(destino) == 1:
+        companhiasDestino = dicRegioesBrasil[i]['companhiasAereas']
+if companhiasOrigem == companhiasDestino:
+    print(f'Companhias aéreas disponíveis: {companhiasOrigem}')
     
