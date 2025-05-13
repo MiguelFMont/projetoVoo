@@ -450,7 +450,7 @@ while True:
                         if destino.isalpha() and len(destino) == 2:
                             destino = destino.upper()
 
-                        if destino == '' or destino.isdigit() == True or len(destino) < 2 or len(destino) > 50:
+                        if destino == '' or destino.isdigit() or len(destino) < 2 or len(destino) > 50:
                             print('Destino inválido, por favor, digite o destino do voo!')
                             input('Pressione ENTER para continuar...')
                             continue
@@ -492,8 +492,19 @@ while True:
                                         aeroportos = aeroportosEstados
                                         print(f'{contAerosportos} - {aeroportos}')
                                         contAerosportos += 1
-                        selectAeroportoOrigem = input('Selecione o aeroporto de origem: ').title()
-                        verifAeroportoOrigem = True
+                                    selectAeroportoOrigem = input('Selecione o aeroporto de origem: ').title()
+                                    if selectAeroportoOrigem.isdigit() == False or int(selectAeroportoOrigem) > contAerosportos or int(selectAeroportoOrigem) < 0 or selectAeroportoOrigem == '':
+                                        print('Aeroporto inválido, por favor digite o aeroporto de origem!')
+                                        input('Pressione ENTER para continuar...')
+                                        continue
+                                    else:
+                                        verifAeroportoOrigem = True
+                                        if selectAeroportoOrigem == '1':
+                                            selectAeroportoOrigem = dicAeroportos[regiao][estado][0]
+                                        elif selectAeroportoOrigem == '2':
+                                            selectAeroportoOrigem = dicAeroportos[regiao][estado][1]
+                                        print(f'Aeroporto de origem escolhido: {selectAeroportoOrigem}')
+                                        input('Pressione ENTER para continuar...')
 
                     verifAeroportoDestino = False
                     while verifAeroportoDestino == False:
@@ -510,8 +521,19 @@ while True:
                                         aeroportos = aeroportosEstados
                                         print(f'{contAerosportos} - {aeroportos}')
                                         contAerosportos += 1
-                        selectAeroportoDestino = input('Selecione o aeroporto de Destino: ').title()
-                        verifAeroportoDestino = True
+                                    selectAeroportoDestino = input('Selecione o aeroporto de Destino: ').title()
+                                    if selectAeroportoDestino.isdigit() == False or int(selectAeroportoDestino) > contAerosportos or int(selectAeroportoDestino) < 0 or selectAeroportoDestino == '':
+                                        print('Aeroporto inválido, por favor digite o aeroporto de destino!')
+                                        input('Pressione ENTER para continuar...')
+                                        continue
+                                    else:
+                                        verifAeroportoDestino = True
+                                        if selectAeroportoDestino == '1':
+                                            selectAeroportoDestino = dicAeroportos[regiao][estado][0]
+                                        elif selectAeroportoDestino == '2':
+                                            selectAeroportoDestino = dicAeroportos[regiao][estado][1]
+                                        print(f'Aeroporto de destino escolhido: {selectAeroportoDestino}')
+                                        input('Pressione ENTER para continuar...')
 
                     verifEscalas = False
                     while verifEscalas == False:
@@ -596,7 +618,7 @@ while True:
                                             contCompanhia += 1
                                         print('------------------')
                                         companhia = input('Digite a companhia aérea: ').title()
-                                        if companhia.isdigit() == False and int(companhia) > contCompanhia or int(companhia) < 0 or companhia == '' :
+                                        if companhia.isdigit() == False or int(companhia) > contCompanhia or int(companhia) < 0 or companhia == '' :
                                             print('Companhia inválida, por favor digite a companhia do voo!')
                                             input('Pressione ENTER para continuar...')
                                             continue
@@ -611,11 +633,33 @@ while True:
                                             elif companhia == '4':
                                                 companhia = dicRegioesBrasil[regiao]['companhiasAereas'][3]
                                             print(f'Companhia escolhida: {companhia}')
+                                            input('Pressione ENTER para continuar...')
+                                            os.system('cls' if os.name == 'nt' else 'clear')
+                    print('------------------')
+                    print(f'Voo cadastrado com sucesso!')
+                    print(f'Origem: {origem}')
+                    print(f'Destino: {destino}')
+                    print(f'Aeroporto de origem: {selectAeroportoOrigem}')
+                    print(f'Aeroporto de destino: {selectAeroportoDestino}')
+                    print(f'Número de escalas: {escalas}')
+                    print(f'Preço da passagem: R$ {precoPassagem:.2f}')
+                    print(f'Número de lugares disponíveis: {lugares}')
+                    print(f'Data e hora do voo: {dataHora}')
+                    print(f'Companhia Aérea: {companhia}')
+                    print('------------------')
+                    input('Pressione ENTER para continuar...')
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     contVoo += 1
                     voos['v' + str(contVoo)] = {
                         'origem': origem,
                         'destino': destino,
-                        'Companhia Aérea': companhia
+                        'aeroportoDeOrigem': companhia,
+                        'aeroportoDeDestino': selectAeroportoDestino,
+                        'escalas': escalas,
+                        'precoPassagem': precoPassagem,
+                        'lugares': lugares,
+                        'dataHora': dataHora,
+                        'companhiaAerea': companhia
                     }
                 elif optionVoo == '2':
                     if contVoo == 0:
