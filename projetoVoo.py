@@ -195,8 +195,10 @@ while True:
 1 - Cadastrar um passageiro
 2 - Passageiros cadastrados
 3 - Voos
-4 - sair''')
+4 - Sair''')
+    
     option = input('\n--> ')
+
     os.system('cls' if os.name == 'nt' else 'clear')
 
     while len(option) != 1 or option not in listaNumeroVerificacao[0:4]:
@@ -363,8 +365,17 @@ while True:
                         print('Telefone inválido, por favor digite o seu telefone!')
                         input('Pressione ENTER para continuar...')
                         continue
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print('------------------')
+                print(f'Passageiro cadastrado com sucesso!')
+                print(f'CPF: {cpf}')
+                print(f'Nome: {nome}')
+                print(f'Idade: {idade}')
+                print(f'Telefone: {telefone}')
+                print('------------------')
+                input('Pressione ENTER para continuar...')
+                os.system('cls' if os.name == 'nt' else 'clear')
 
-                    
                 passageiros[cpf] = {
                     'nome': nome,
                     'idade': idade,
@@ -380,13 +391,15 @@ while True:
                 os.system('cls' if os.name == 'nt' else 'clear')
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
+                print(f'Listando de passageiros cadastrados ({contPessoas}):\n')
                 for c, dados in passageiros.items():
                     print('------------------')
-                    print(f'cpf: {c}')
-                    print(f'nome: {dados['nome']}')
-                    print(f'idade: {dados['idade']}')
-                    print(f'telefone: {dados['telefone']}')
+                    print(f'CPF: {c}')
+                    print(f'Nome: {dados['nome']}')
+                    print(f'Idade: {dados['idade']}')
+                    print(f'Telefone: {dados['telefone']}')
                     print('------------------')
+                input('Pressione ENTER para continuar...')
         elif option == '3':
             os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -394,7 +407,7 @@ while True:
                         
             1- Cadastrar um voo  
             2- Consultar voos cadastrados
-            3- listar passageiros de um voo
+            3- Listar passageiros de um voo
             4- 
                     ''')
             optionVoo = input('--> ')
@@ -669,11 +682,18 @@ while True:
                         print('Voos cadastrados:')
                         for c, dados in voos.items():
                             print('------------------')
-                            print(f'Voo: {c}')
+                            print(f'Código do voo: {c}')
                             print(f'Origem: {dados['origem']}')
                             print(f'Destino: {dados['destino']}')
+                            print(f'Aeroporto de origem: {dados['aeroportoDeOrigem']}')
+                            print(f'Aeroporto de destino: {dados['aeroportoDeDestino']}')
+                            print(f'Número de escalas: {dados['escalas']}')
+                            print(f'Preço da passagem: R$ {dados['precoPassagem']:.2f}')
+                            print(f'Número de lugares disponíveis: {['lugares']}')
+                            print(f'Data e hora do voo: {dados['dataHora']}')
                             print(f'Companhia Aérea: {dados['companhiaAerea']}')
-                            print('------------------')
+                            print('------------------\n')
+                        input('Pressione ENTER para continuar...')
 
         elif option == '4':
             print('Finalizando app...')
