@@ -1,19 +1,7 @@
 import os
 
 passageiros = dict()
-voos = {
-    'v-1':{
-        'origem': 'São Paulo (SP)',
-        'destino': 'Rio de Janeiro (RJ)',
-        'aeroportoDeOrigem': 'Aeroporto de Congonhas (CGH)',
-        'aeroportoDeDestino': 'Aeroporto Santos Dumont (SDU)',
-        'escalas': 1,
-        'precoPassagem': 'R$ 2.000,00',
-        'lugares': 40,
-        'dataHora': '15/05/2025 22:26',
-        'companhiaAerea': 'Azul Linhas Aéreas'
-    }
-}
+voos = {}
 lugares = 40
 listaNumeroVerificacao = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '.']
 listCaracteresEspeciais = ['.', '-', '(', ')',] 
@@ -201,7 +189,7 @@ dicAeroportos = {
 }
 
 contPessoas = 0
-contVoo = 1
+contVoo = 0
 
 verifOption = False
 while verifOption == False:
