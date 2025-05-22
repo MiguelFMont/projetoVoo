@@ -36,7 +36,6 @@ voos = {
 listaNumeroVerificacao = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '.']
 listCaracteresEspeciais = ['.', '-', '(', ')',] 
 dicPassagensVoos = {}
-dicPassageirosAcompanhante = {} 
 
 dicRegioesBrasil = {
     'Norte': {
@@ -1268,7 +1267,7 @@ Escolha uma das opções a baixo:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     continue
                                 
-                                if cpfVendaFormatado in dicPassagensVoos:
+                                if codVoo in dicPassagensVoos and cpfVendaFormatado in dicPassagensVoos[codVoo]:
                                     print('Este passageiro já possui uma ou mais passagens compradas!')
                                     print(f'Deseja incluir uma nova passagem? \n\n1-SIM\n\n2-NÃO')
 
@@ -1460,7 +1459,8 @@ Escolha uma das opções a baixo:
                                                 break
                                     if opcaoVendaPassagem == '-':
                                         continue
-                                else:                        
+                                else:       
+                                    print(f'Passageiro encontrado:\nCPF: {cpfVendaFormatado} \nNome: {passageiros[cpfVendaFormatado]['nome']}')                 
                                     verifQtdPassagens = False
                                     while not verifQtdPassagens:
 
@@ -1479,7 +1479,7 @@ Escolha uma das opções a baixo:
                                             qtdPassagens = int(qtdPassagens)
                                             if qtdPassagens > 1:
                                                 for i in range(2, qtdPassagens+1):
-                                                    print(f'Digite os dado {i} passageiro: ')
+                                                    print(f'Digite os dados do {i}º passageiro: ')
                                                     verifCpfPassageiro = False
                                                     while verifCpfPassageiro == False:
                                                         cpfPassageiro = input('Digite o CPF do passageiro: ')
@@ -1521,7 +1521,7 @@ Escolha uma das opções a baixo:
                                                 
                                                     if passageiroEncontrado == True:
                                                         
-                                                        if cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
+                                                        if codVoo in dicPassagensVoos and cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
                                                             print(f'Passageiro encontrado: \nCPF: {cpf}\nNome: {passageiros[cpfAcompanhanteFormatado]['nome']}\nSerá incluido como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')
                                                             dicPassageirosAcompanhante[cpfAcompanhanteFormatado] += {
                                                             'nome': nome,
@@ -1533,8 +1533,8 @@ Escolha uma das opções a baixo:
                                                             continue
 
                                                     else:
-
-                                                        if cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
+                                                        
+                                                        if codVoo in dicPassagensVoos and cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
                                                             print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
                                                             i -= 1
                                                             continue
@@ -1606,44 +1606,7 @@ Escolha uma das opções a baixo:
 
                                                         if idade == '-':
                                                                 break
-                                                        
-                                                        dicPassageirosAcompanhante[cpfAcompanhanteFormatado] += {
-                                                            'nome': nome,
-                                                            'idade': idade
-                                                        }
-
-                                                voos[codVoo]['lugares'] -= qtdPassagens 
-                                                dicPassagensVoos[codVoo] += {
-                                                    cpfVendaFormatado : passageiros[cpfVendaFormatado]['nome']
-                                                        }
-                                                for cpf, dados in dicPassageirosAcompanhante.items():
-                                                    dicPassagensVoos[codVoo][cpfVendaFormatado] += {
-                                                        cpf : dados['nome']
-                                                    }
-                                                print('==================')
-                                                for cpf, dados in dicPassageirosAcompanhante.items():
-                                                    print(f'{dados['nome']}')
-                                                print(f'Incluído(s) no voo {codVoo} como acompanhante do(a) {passageiros[cpfVendaFormatado]['nome']} !')
-                                                print('==================')
-                                                input('Pressione ENTER para continuar...')
-
-                                                dicPassageirosAcompanhante = {} 
-                                                os.system('cls' if os.name == 'nt' else 'clear')
-                                                if qtdPassagens == '-':
-                                                    continue
-                                            else:
-                                                voos[codVoo]['lugares'] -= qtdPassagens 
-                                                dicPassagensVoos[codVoo] += {
-                                                    cpfVendaFormatado : passageiros[cpfVendaFormatado]['nome']
-                                                        }
-                                                print('==================')
-                                                print(f'{passageiros[cpfVendaFormatado]['nome']} incluido no voo: {codVoo} !')
-                                                print('==================')
-                                                input('Pressione ENTER para continuar...')
-
-                                                dicPassageirosAcompanhante = {} 
-                                                os.system('cls' if os.name == 'nt' else 'clear')
-
+                                                
                             elif opcaoPassagem == '2':
 
                                 verifCpfCancelamento = False
