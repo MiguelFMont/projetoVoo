@@ -232,7 +232,7 @@ while verifOption == False:
           
 Escolha uma das opções a baixo:
 
-1 - Cadastrar um passageiro
+1 - Cadastrar passageiros
 2 - Passageiros cadastrados
 3 - Voos
 4 - Sair
@@ -270,12 +270,11 @@ Escolha uma das opções a baixo:
             pessoas = 0
 
             while pessoas < numPessoas:
-                print(f'\n{pessoas + 1}° Pessoa')
-
 
                 verifCpf = False
                 while verifCpf == False:
                     os.system('cls' if os.name == 'nt' else 'clear')
+                    print(f'\n{pessoas + 1}° Pessoa')
                     cpf = input('Digite seu CPF: ')
 
                     if cpf == '-':
@@ -380,8 +379,12 @@ Escolha uma das opções a baixo:
                     if idade == '-':
                         break
 
-                    if idade.isdigit() == False or int(idade) < 18 or int(idade) > 120:
+                    if idade.isdigit() == False or int(idade) < 18:
                         print('Idade inválida, o usuário deve ser maior de idade!')
+                        input('Pressione ENTER para continuar...')
+                        continue
+                    elif int(idade) > 120:
+                        print('Idade inválida, por favor digite novamnete!')
                         input('Pressione ENTER para continuar...')
                         continue
                     else:
@@ -1276,7 +1279,7 @@ Escolha uma das opções a baixo:
                                 
                                 if codVoo in dicPassagensVoos and cpfVendaFormatado in dicPassagensVoos[codVoo]:
                                     print(f'Este passageiro ({passageiros[cpfVendaFormatado]['nome']}) já possui uma ou mais passagens compradas!')
-                                    print(f'Deseja incluir uma nova passagem? \n\n1-SIM\n\n2-NÃO')
+                                    print(f'Deseja incluir uma nova passagem como acompanhante? \n\n1-SIM\n\n2-NÃO')
 
                                     verifOpcaoVendaPassagem = False
                                     while not verifOpcaoVendaPassagem:
@@ -1629,6 +1632,15 @@ Escolha uma das opções a baixo:
                                                             'nomeAcompanhante' : nome,
                                                             'idadeAcompanhante' : idade
                                                             }
+                                                print(f'=====================')
+                                                print(f'CPF: {cpfVendaFormatado} - {passageiros[cpfVendaFormatado]['nome']} - idade: {passageiros[cpfVendaFormatado]['idade']}')
+                                                print(f'Acompanhantes: ')
+                                                for cpfAcompanhante, dados in dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'].items():
+                                                    print(f'- CPF: {cpfAcompanhante} - {dados['nomeAcompanhante']} - idade: {dados['idadeAcompanhante']}')
+                                                print(f'Foram incluídos no voo {codVoo} com sucesso!')
+                                                print(f'=====================\n')
+                                                input(f'Pressione ENTER para continuar..')
+                                                os.system('cls' if os.name == 'nt' else 'clear')
                                             else:
                                                 voos[codVoo]['lugares'] -= 1
                                                 dicPassagensVoos[codVoo][cpfVendaFormatado] = {
