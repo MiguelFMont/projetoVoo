@@ -379,10 +379,118 @@ Escolha uma das opções a baixo:
                     if idade == '-':
                         break
 
-                    if idade.isdigit() == False or int(idade) < 18:
-                        print('Idade inválida, o usuário deve ser maior de idade!')
-                        input('Pressione ENTER para continuar...')
+                    if idade.isdigit() == False: 
+                        print(f'Idade inválida! Por favor, digite novamente.')
+                        input(f'Pressione ENTER para continuar..')
                         continue
+
+                    veriverifcpfResponsavel = False
+                    if int(idade) < 18:
+                        print('Passageiros menores de idade precisam estar ligados a um responsável!')
+
+                        while verifcpfResponsavel == False:
+                            os.system('cls' if os.name == 'nt' else 'clear')
+                            print(f'\n{pessoas + 1}° Pessoa')
+                            cpfResponsavel = input('Digite o CPF do responsável: ')
+
+                            if cpfResponsavel == '-':
+                                break
+
+                            if len(cpfResponsavel) == 14:
+                                contNumCpfResponsavel = 0
+                                contCarCpfResponsavel = 0
+                                for i in cpfResponsavel:
+                                    if i.isdigit() == True:
+                                        contNumCpfResponsavel += 1
+                                    if listCaracteresEspeciais.count(i) == 1:
+                                        contCarCpfResponsavel += 1
+                                if contNumCpfResponsavel == 11 and contCarCpfResponsavel == 3 and cpfResponsavel[3] == '.' and cpfResponsavel[7] == '.' and cpfResponsavel[11] == '-':
+                                    if cpfResponsavel in passageiros.keys():
+                                        if int(passageiros[cpfResponsavel]['idade']) >= 18:
+                                            passageiros[cpfResponsavel]['acompanhante'][cpf] = {
+                                                'nome': nome,
+                                                'idade': idade,
+                                                'telefoneResponsavel': passageiros[cpfResponsavel]['telefone'],
+                                                'cpfResponsavel' : cpfResponsavel,
+                                                'nomeResponsavel' : passageiros[cpfResponsavel]['nome']
+                                            }   
+
+                                            os.system('cls' if os.name == 'nt' else 'clear')
+                                            print('==================')
+                                            print(f'Passageiro cadastrado com sucesso!')
+                                            print(f'CPF: {cpf}')
+                                            print(f'Nome: {nome}')
+                                            print(f'Idade: {idade}')
+                                            print(f'Telefone do Responsável: {passageiros[cpf]['telefoneResponsavel']}')
+                                            print(f'CPF do responsável: {passageiros[cpf]['cpfResponsavel']}')
+                                            print(f'Nome do responsável: {passageiros[cpf]['nomeResponsavel']}')
+                                            print('==================')
+                                            input('Pressione ENTER para continuar...')
+                                            os.system('cls' if os.name == 'nt' else 'clear')
+
+                                            pessoas += 1
+                                            contPessoas += 1
+                                            verifIdade = True
+                                            verifcpfResponsavel = True
+                                            continue
+                                        
+                                        else:
+                                            print(f'O passageiro responsável precisa ser maior de idade')
+                                            continue
+                                    else:
+                                        print(f'Não há passageiros cadastrados com esse CPF ({cpfResponsavel})')
+                                        continue
+                                    
+                                else:
+                                    print('CPF inválido, por favor digite o CPF do responsável!')
+                                    input('Pressione ENTER para continuar...')
+                                    continue
+
+                            if len(cpfResponsavel) == 11 and cpfResponsavel.isdigit() == True:
+                                cpfResponsavel = cpfResponsavel[0:3] + '.' + cpfResponsavel[3:6] + '.' + cpfResponsavel[6:9] + '-' + cpfResponsavel[9:11]
+                                if cpfResponsavel in passageiros.keys():
+                                    if int(passageiros[cpfResponsavel]['idade']) >= 18:
+                                        passageiros[cpfResponsavel]['acompanhante'][cpf] = {
+                                            'nome': nome,
+                                            'idade': idade,
+                                            'telefoneResponsavel': passageiros[cpfResponsavel]['telefone'],
+                                            'cpfResponsavel' : cpfResponsavel,
+                                            'nomeResponsavel' : passageiros[cpfResponsavel]['nome']
+                                        }   
+
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print('==================')
+                                        print(f'Passageiro cadastrado com sucesso!')
+                                        print(f'CPF: {cpf}')
+                                        print(f'Nome: {nome}')
+                                        print(f'Idade: {idade}')
+                                        print(f'Telefone do Responsável: {passageiros[cpf]['telefoneResponsavel']}')
+                                        print(f'CPF do responsável: {passageiros[cpf]['cpfResponsavel']}')
+                                        print(f'Nome do responsável: {passageiros[cpf]['nomeResponsavel']}')
+                                        print('==================')
+                                        input('Pressione ENTER para continuar...')
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+
+                                        pessoas += 1
+                                        contPessoas += 1
+                                        verifcpfResponsavel = True
+                                        verifIdade = True
+                                        continue
+                                    
+                                    else:
+                                        print(f'O passageiro responsável precisa ser maior de idade')
+                                        continue
+                                else:
+                                    print(f'Não há passageiros cadastrados com esse CPF ({cpfResponsavel})')
+                                    continue
+                            else:   
+                                print('CPF inválido, por favor digite o seu cpfResponsavel!')
+                                input('Pressione ENTER para continuar...')
+                                continue
+
+                        if cpfResponsavel == '-':
+                                break
+
                     elif int(idade) > 120:
                         print('Idade inválida, por favor digite novamnete!')
                         input('Pressione ENTER para continuar...')
@@ -392,6 +500,9 @@ Escolha uma das opções a baixo:
 
                 if idade == '-':
                         break
+                
+                if cpfResponsavel == True:
+                    break
 
                 verifTelefone = False
                 while verifTelefone == False:
@@ -460,7 +571,8 @@ Escolha uma das opções a baixo:
                 passageiros[cpf] = {
                     'nome': nome,
                     'idade': idade,
-                    'telefone': telefone
+                    'telefone': telefone,
+                    'acompanhante' : {}
                 }
                 pessoas += 1
                 contPessoas += 1
@@ -1228,13 +1340,16 @@ Escolha uma das opções a baixo:
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         continue
 
-                                    if voos[codVoo]['lugares'] <= 0:
+                                    if voos[codVoo]['lugares'] == 0:
                                         print('Não há lugares disponíveis neste voo!')
                                         input('Pressione ENTER para continuar...')
                                         os.system('cls' if os.name == 'nt' else 'clear')
                                         continue
 
                                     verifCodVoo = True
+
+                                    if codVoo not in dicPassagensVoos:
+                                        dicPassagensVoos[codVoo] = {}
 
                                 verifCpfVenda = False
                                 while verifCpfVenda == False:
@@ -1276,10 +1391,15 @@ Escolha uma das opções a baixo:
                                     input('Pressione ENTER para continuar...')
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     continue
-                                
-                                if codVoo in dicPassagensVoos and cpfVendaFormatado in dicPassagensVoos[codVoo]:
+
+                                if passageiros[cpfVendaFormatado]['idade'] < 18:
+                                    print(f'{passageiros[cpfVendaFormatado]['nome']} não possui idade suficiente para comprar passagens aéreas')
+                                    continue
+
+                                if cpfVendaFormatado in dicPassagensVoos[codVoo]:
                                     print(f'Este passageiro ({passageiros[cpfVendaFormatado]['nome']}) já possui uma ou mais passagens compradas!')
-                                    print(f'Deseja incluir uma nova passagem como acompanhante? \n\n1-SIM\n\n2-NÃO')
+                                    print(f'Deseja incluir uma nova passagem? \n\n1-SIM\n\n2-NÃO')
+                                    print(f'obs: Passageiros menores de idade são incluidos como acompanhantes.')
 
                                     verifOpcaoVendaPassagem = False
                                     while not verifOpcaoVendaPassagem:
@@ -1312,9 +1432,11 @@ Escolha uma das opções a baixo:
                                                     else:
                                                         verifQtdPassagens = True
                                                         qtdPassagens = int(qtdPassagens)
+                                                        listaPassageirosIncluidos = []
 
                                                         if qtdPassagens > 1:
                                                             for i in range(2, qtdPassagens+1):
+                                                                
                                                                 print(f'Digite os dados do {i}º passageiro: ')
                                                                 verifCpfPassageiro = False
                                                                 while verifCpfPassageiro == False:
@@ -1351,32 +1473,35 @@ Escolha uma das opções a baixo:
                                                                 if cpfPassageiro == '-':
                                                                         break
                                                                 
-                                                                passageiroEncontrado = False
-                                                                if cpfAcompanhanteFormatado in passageiros:
-                                                                    passageiroEncontrado = True
-                                                            
-                                                                if passageiroEncontrado == True:
-                                                                    
-                                                                    if codVoo in dicPassagensVoos and cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
-                                                                        print(f'Passageiro encontrado: \nCPF: {cpfAcompanhanteFormatado}\nNome: {passageiros[cpfAcompanhanteFormatado]['nome']}\nSerá incluido como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')
-
-                                                                        voos[codVoo]['lugares'] -= 1
-                                                                        dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                                        'nomeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['nome'],
-                                                                        'idadeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['idade']
-                                                                        }
+                                                                if cpfAcompanhanteFormatado in passageiros or cpfAcompanhanteFormatado in passageiros[cpfVendaFormatado]['acompanhante']:
+                                                                    if int(passageiros[cpfAcompanhanteFormatado]['idade']) > 18:
+                                                                        if cpfAcompanhanteFormatado not in dicPassagensVoos:
+                                                                            voos[codVoo]['lugares'] -= 1
+                                                                            dicPassagensVoos[codVoo][cpfAcompanhanteFormatado] = {
+                                                                            'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                            'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                            'telefone' : passageiros[cpfAcompanhanteFormatado]['idade']
+                                                                            }
+                                                                        listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
                                                                         continue
+                                                                    else:
+                                                                        if cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
+                                                                            print(f'Passageiro encontrado: \nCPF: {cpfAcompanhanteFormatado}\nNome: {passageiros[cpfAcompanhanteFormatado]['nome']}\nSerá incluido como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')
 
-                                                                    elif codVoo in dicPassagensVoos and cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
-                                                                        print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
-                                                                        i -= 1
-                                                                        continue
+                                                                            voos[codVoo]['lugares'] -= 1
+                                                                            dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                            'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                            'idade' : passageiros[cpfAcompanhanteFormatado]['idade']
+                                                                            }
+                                                                            listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                                            continue
+
+                                                                        elif codVoo in dicPassagensVoos and cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
+                                                                            print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                            i -= 1
+                                                                            continue
 
                                                                 else:
-                                                                    if codVoo in dicPassagensVoos and cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
-                                                                        print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
-                                                                        i -= 1
-                                                                        continue
                                                                 
                                                                     verifNome = False
                                                                     while verifNome == False:
@@ -1441,7 +1566,7 @@ Escolha uma das opções a baixo:
                                                                         if idade == '-':
                                                                             break
 
-                                                                        if idade.isdigit() == False or int(idade) < 0 or int(idade) > 120:
+                                                                        if idade.isdigit() == False or int(idade) < 1 or int(idade) > 120:
                                                                             print('Idade inválida, por favor digite a sua idade!')
                                                                             input('Pressione ENTER para continuar...')
                                                                             continue
@@ -1451,13 +1576,97 @@ Escolha uma das opções a baixo:
                                                                     if idade == '-':
                                                                             break
                                                                     
-                                                                    voos[codVoo]['lugares'] -= 1
-                                                                    dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                                        'nomeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['nome'],
-                                                                        'idadeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['idade']
+                                                                    if int(idade) >= 18:
+                                                                        verifTelefone = False
+                                                                        while verifTelefone == False:
+                                                                            os.system('cls' if os.name == 'nt' else 'clear')
+                                                                            telefone = input('Digite telefone: ')
+                                                                            contTelefone = 0
+
+                                                                            if telefone == '-':
+                                                                                break
+
+                                                                            if len(telefone) == 14:
+                                                                                contNumTel = 0
+                                                                                contCarTel = 0
+                                                                                for i in telefone:
+                                                                                    if i.isdigit() == True:
+                                                                                        contNumTel += 1
+                                                                                    if listCaracteresEspeciais.count(i) == 1:
+                                                                                        contCarTel += 1
+                                                                                if contNumTel == 11 and contCarTel == 3 and telefone[0] == '(' and telefone[3] == ')' and telefone[9] == '-':
+                                                                                    for c in passageiros:
+                                                                                        if telefone in passageiros[c]['telefone']:
+                                                                                            contTelefone += 1
+                                                                                    if contTelefone > 0:
+                                                                                        print('Telefone já cadastrado! Por favor, digite outro telefone!')
+                                                                                        input('Pressione ENTER para continuar...')
+                                                                                        continue
+                                                                                    else:
+                                                                                        verifTelefone = True
+                                                                                        continue
+                                                                                else:
+                                                                                    print('Telefone inválido, por favor digite o seu telefone!')
+                                                                                    continue
+
+                                                                            if telefone.isdigit() and len(telefone) == 11:
+                                                                                telefone = '(' + telefone[0:2] + ')' + telefone[2:7] + '-' + telefone[7:11]
+                                                                                for c in passageiros:
+                                                                                    if telefone in passageiros[c]['telefone']:
+                                                                                        contTelefone += 1
+                                                                                if contTelefone > 0:
+                                                                                    print('Telefone já cadastrado! Por favor, digite outro telefone!')
+                                                                                    input('Pressione ENTER para continuar...')
+                                                                                    continue
+                                                                                else:
+                                                                                    verifTelefone = True
+                                                                                    continue
+                                                                                    
+                                                                            else:
+                                                                                print('Telefone inválido, por favor digite o seu telefone!')
+                                                                                input('Pressione ENTER para continuar...')
+                                                                                continue
+                                                                        
+                                                                        if telefone == '-':
+                                                                            break
+
+                                                                        voos[codVoo]['lugares'] -= 1
+                                                                        dicPassagensVoos[codVoo][cpfAcompanhanteFormatado] = {
+                                                                        'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                        'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                        'telefone' : passageiros[cpfAcompanhanteFormatado]['telefone'],
+                                                                        'acompanhante' : {}
                                                                         }
-                                            else:
+                                                                        listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                                        
+                                                                    else:
+                                                                        passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                            'nome': nome,
+                                                                            'idade': idade,
+                                                                            'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
+                                                                            'cpfResponsavel' : cpfVendaFormatado
+                                                                        }
+                                                                    
+                                                                        voos[codVoo]['lugares'] -= 1
+                                                                        dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                            'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                            'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                            'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
+                                                                            'cpfResponsavel' : cpfVendaFormatado
+                                                                            }
+                                                                        listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                            print(f'===================')
+                                                            for cpf in listaPassageirosIncluidos:
+                                                                if cpf in passageiros[cpfVendaFormatado]['acompanhante']:
+                                                                    print(f'{passageiros[cpfVendaFormatado]['acompanhante'][cpf]['nome']} foi incluido no voo: {codVoo}, como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')     
+                                                                else:                                                           
+                                                                    print(f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo}')
+
+                                                            print(f'===================') 
+                                                            listaPassageirosIncluidos = []
+                                            else:                       
                                                 break
+
                                     if opcaoVendaPassagem == '-':
                                         continue
                                 else:       
@@ -1480,17 +1689,21 @@ Escolha uma das opções a baixo:
                                             verifQtdPassagens = True
                                             qtdPassagens = int(qtdPassagens)
 
-                                            if codVoo not in dicPassagensVoos:
-                                                dicPassagensVoos[codVoo] = {}
-
                                             voos[codVoo]['lugares'] -= 1
                                             dicPassagensVoos[codVoo][cpfVendaFormatado] = {
                                                 'nome' : passageiros[cpfVendaFormatado]['nome'],
+                                                'idade' : passageiros[cpfVendaFormatado]['idade'],
+                                                'telefone' : passageiros[cpfVendaFormatado]['telefone'],
                                                 'acompanhante' : {}
                                             }
 
+                                            verifQtdPassagens = True
+                                            qtdPassagens = int(qtdPassagens)
+                                            listaPassageirosIncluidos = []
+
                                             if qtdPassagens > 1:
                                                 for i in range(2, qtdPassagens+1):
+                                                    
                                                     print(f'Digite os dados do {i}º passageiro: ')
                                                     verifCpfPassageiro = False
                                                     while verifCpfPassageiro == False:
@@ -1527,32 +1740,39 @@ Escolha uma das opções a baixo:
                                                     if cpfPassageiro == '-':
                                                             break
                                                     
-                                                    passageiroEncontrado = False
-                                                    if cpfAcompanhanteFormatado in passageiros:
-                                                        passageiroEncontrado = True
-                                                
-                                                    if passageiroEncontrado == True:
-                                                        
-                                                        if cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
-                                                            print(f'Passageiro encontrado: \nCPF: {cpfAcompanhanteFormatado}\nNome: {passageiros[cpfAcompanhanteFormatado]['nome']}\nSerá incluido como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')
-
-                                                            voos[codVoo]['lugares'] -= 1
-                                                            dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                            'nomeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['nome'],
-                                                            'idadeAcompanhante' : passageiros[cpfAcompanhanteFormatado]['idade']
-                                                            }
+                                                    if cpfAcompanhanteFormatado in passageiros or cpfAcompanhanteFormatado in passageiros[cpfVendaFormatado]['acompanhante']:
+                                                        if int(passageiros[cpfAcompanhanteFormatado]['idade']) > 18:
+                                                            if cpfAcompanhanteFormatado not in dicPassagensVoos:
+                                                                voos[codVoo]['lugares'] -= 1
+                                                                dicPassagensVoos[codVoo][cpfAcompanhanteFormatado] = {
+                                                                'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                'telefone' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                'acompanhante' : {}     
+                                                                }
+                                                            listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
                                                             continue
+                                                        else:
+                                                            if cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo]:
+                                                                print(f'Passageiro encontrado: \nCPF: {cpfAcompanhanteFormatado}\nNome: {passageiros[cpfAcompanhanteFormatado]['nome']}\nSerá incluido como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')
 
-                                                        elif cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
-                                                            print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
-                                                            i -= 1
-                                                            continue
+                                                                voos[codVoo]['lugares'] -= 1
+                                                                dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                'nome': nome,
+                                                                'idade': idade,
+                                                                'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
+                                                                'cpfResponsavel' : cpfVendaFormatado,
+                                                                'nomeResponsavel' : passageiros[cpfVendaFormatado]['nome']
+                                                                }
+                                                                listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                                continue
+
+                                                            elif cpfAcompanhanteFormatado in dicPassagensVoos[codVoo] or cpfAcompanhanteFormatado in dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante']:
+                                                                print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                i -= 1
+                                                                continue
 
                                                     else:
-                                                        if codVoo in dicPassagensVoos and cpfAcompanhanteFormatado in dicPassagensVoos[codVoo]:
-                                                            print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
-                                                            i -= 1
-                                                            continue
                                                     
                                                         verifNome = False
                                                         while verifNome == False:
@@ -1617,7 +1837,7 @@ Escolha uma das opções a baixo:
                                                             if idade == '-':
                                                                 break
 
-                                                            if idade.isdigit() == False or int(idade) < 0 or int(idade) > 120:
+                                                            if idade.isdigit() == False or int(idade) < 1 or int(idade) > 120:
                                                                 print('Idade inválida, por favor digite a sua idade!')
                                                                 input('Pressione ENTER para continuar...')
                                                                 continue
@@ -1627,24 +1847,99 @@ Escolha uma das opções a baixo:
                                                         if idade == '-':
                                                                 break
                                                         
-                                                        voos[codVoo]['lugares'] -= 1
-                                                        dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                            'nomeAcompanhante' : nome,
-                                                            'idadeAcompanhante' : idade
+                                                        if int(idade) >= 18:
+                                                            verifTelefone = False
+                                                            while verifTelefone == False:
+                                                                os.system('cls' if os.name == 'nt' else 'clear')
+                                                                telefone = input('Digite telefone: ')
+                                                                contTelefone = 0
+
+                                                                if telefone == '-':
+                                                                    break
+
+                                                                if len(telefone) == 14:
+                                                                    contNumTel = 0
+                                                                    contCarTel = 0
+                                                                    for i in telefone:
+                                                                        if i.isdigit() == True:
+                                                                            contNumTel += 1
+                                                                        if listCaracteresEspeciais.count(i) == 1:
+                                                                            contCarTel += 1
+                                                                    if contNumTel == 11 and contCarTel == 3 and telefone[0] == '(' and telefone[3] == ')' and telefone[9] == '-':
+                                                                        for c in passageiros:
+                                                                            if telefone in passageiros[c]['telefone']:
+                                                                                contTelefone += 1
+                                                                        if contTelefone > 0:
+                                                                            print('Telefone já cadastrado! Por favor, digite outro telefone!')
+                                                                            input('Pressione ENTER para continuar...')
+                                                                            continue
+                                                                        else:
+                                                                            verifTelefone = True
+                                                                            continue
+                                                                    else:
+                                                                        print('Telefone inválido, por favor digite o seu telefone!')
+                                                                        continue
+
+                                                                if telefone.isdigit() and len(telefone) == 11:
+                                                                    telefone = '(' + telefone[0:2] + ')' + telefone[2:7] + '-' + telefone[7:11]
+                                                                    for c in passageiros:
+                                                                        if telefone in passageiros[c]['telefone']:
+                                                                            contTelefone += 1
+                                                                    if contTelefone > 0:
+                                                                        print('Telefone já cadastrado! Por favor, digite outro telefone!')
+                                                                        input('Pressione ENTER para continuar...')
+                                                                        continue
+                                                                    else:
+                                                                        verifTelefone = True
+                                                                        continue
+                                                                        
+                                                                else:
+                                                                    print('Telefone inválido, por favor digite o seu telefone!')
+                                                                    input('Pressione ENTER para continuar...')
+                                                                    continue
+                                                            
+                                                            if telefone == '-':
+                                                                break
+
+                                                            voos[codVoo]['lugares'] -= 1
+                                                            dicPassagensVoos[codVoo][cpfAcompanhanteFormatado] = {
+                                                            'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                            'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                            'telefone' : passageiros[cpfAcompanhanteFormatado]['telefone']
                                                             }
-                                                print(f'=====================')
-                                                print(f'CPF: {cpfVendaFormatado} - {passageiros[cpfVendaFormatado]['nome']} - idade: {passageiros[cpfVendaFormatado]['idade']}')
-                                                print(f'Acompanhantes: ')
-                                                for cpfAcompanhante, dados in dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'].items():
-                                                    print(f'- CPF: {cpfAcompanhante} - {dados['nomeAcompanhante']} - idade: {dados['idadeAcompanhante']}')
-                                                print(f'Foram incluídos no voo {codVoo} com sucesso!')
-                                                print(f'=====================\n')
-                                                input(f'Pressione ENTER para continuar..')
-                                                os.system('cls' if os.name == 'nt' else 'clear')
+                                                            listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                            
+                                                        else:
+                                                            passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                'nome': nome,
+                                                                'idade': idade,
+                                                                'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
+                                                                'cpfResponsavel' : cpfVendaFormatado,
+                                                                'nomeResponsavel' : passageiros[cpfVendaFormatado]['nome']
+                                                            }
+                                                        
+                                                            voos[codVoo]['lugares'] -= 1
+                                                            dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
+                                                                'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
+                                                                'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
+                                                                'cpfResponsavel' : cpfVendaFormatado,
+                                                                'nomeResponsavel' : passageiros[cpfVendaFormatado]['nome']
+                                                                }
+                                                            
+                                                            listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                print(f'===================')       
+                                                for cpf in listaPassageirosIncluidos:
+                                                    print(f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo} como acompanhante de {passageiros[cpfVendaFormatado]['nome']}' 
+                                                            if int(passageiros[cpf]['idade']) < 18 else f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo}')
+                                                print(f'===================') 
+                                                listaPassageirosIncluidos = []
                                             else:
                                                 voos[codVoo]['lugares'] -= 1
                                                 dicPassagensVoos[codVoo][cpfVendaFormatado] = {
                                                     'nome' : passageiros[cpfVendaFormatado]['nome'],
+                                                    'idade': passageiros[cpfVendaFormatado]['idade'],
+                                                    'telefone' : passageiros[cpfVendaFormatado]['telefone'],
                                                     'acompanhante' : {}
                                                 }
                                                 print(f'{passageiros[cpfVendaFormatado]['nome']} foi incluido(a) no voo: {codVoo}!')
@@ -1691,33 +1986,38 @@ Escolha uma das opções a baixo:
                                 if cpfCancelar == '-':
                                         break
                                 
-                                for codVoo in dicPassagensVoos:
+                                verifcodigoVooCancelar = False
+                                while not verifcodigoVooCancelar:
+                                    contNaoEncontrado = 0
+                                    for codVoo in dicPassagensVoos:
+                                        if cpfCancelarFormatado in dicPassagensVoos[codVoo]:
+                                            print(f'Voos em que {passageiros[cpfCancelarFormatado]['nome']} tem passagens:')
+                                            print(f'obs: Passageiros acompanhantes (menores de 18) ligados as este CPF são excluídos automaticamente')
 
-                                        verifcodigoVooCancelar = False
-                                        while not verifcodigoVooCancelar:
-                                            if cpfCancelarFormatado in dicPassagensVoos[codVoo]:
-                                                print(f'Voos em que {passageiros[cpfCancelarFormatado]['nome']} tem passagens:')
+                                            for codVoo, dados in voos.items():
+                                                print(f'{codVoo}: Origem - {dados['origem']}, destino - {dados['destino']}')
+                                            codigoVooCancelar = input(f'Digite o código do voo que deseja cancelar: ')
 
-                                                for codVoo, dados in voos.items():
-                                                    print(f'{codVoo}: Origem - {dados['origem']}, destino - {dados['destino']}')
-                                                codigoVooCancelar = input(f'Digite o código do voo que deseja cancelar: ')
+                                            if codigoVooCancelar == '-':
+                                                break
 
-                                                if codigoVooCancelar == '-':
-                                                    break
-
-                                                if codigoVooCancelar == '' or codigoVooCancelar not in dicPassagensVoos:
-                                                    print(f'Código inválido! Por favor, digite novamente.')
-                                                    input(f'Pressione ENTER para continuar..')
-                                                    os.system('cls' if os.name == 'nt' else 'clear')
-                                                else:   
-                                                    del dicPassagensVoos[codVoo][cpfCancelarFormatado]
-                                                    print('Passagem cancelada com sucesso!')
-                                                    voos[codVoo]['lugares'] += 1
-                                                    verifcodigoVooCancelar = True
-                                            else:
-                                                print('Nenhuma passagem encontrada para esse CPF.')
-                                                input('Pressione ENTER para continuar...')
+                                            if codigoVooCancelar == '' or codigoVooCancelar not in dicPassagensVoos:
+                                                print(f'Código inválido! Por favor, digite novamente.')
+                                                input(f'Pressione ENTER para continuar..')
                                                 os.system('cls' if os.name == 'nt' else 'clear')
+                                            else:   
+                                                del dicPassagensVoos[codVoo][cpfCancelarFormatado]
+                                                print('Passagem cancelada com sucesso!')
+
+                                                contPassageirosVoo = 0
+                                                contPassageirosVoo += len(dicPassagensVoos[codVoo][cpfCancelarFormatado]['acompanhante'])+1
+                                                voos[codVoo]['lugares'] += contPassageirosVoo
+                                        else:
+                                            contNaoEncontrado += 1
+                                        if contNaoEncontrado == len(dicRegioesBrasil):
+                                            print('Nenhuma passagem encontrada para esse CPF.')
+                                            input('Pressione ENTER para continuar...')
+                                            os.system('cls' if os.name == 'nt' else 'clear')
 
                             elif opcaoPassagem == '3':
                                 verifMenuPassagem = True
