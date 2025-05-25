@@ -4,17 +4,20 @@ passageiros = {
     '466.156.648-36':{
         'nome': 'Miguel Fernandes Monteiro',
         'idade': 18,
-        'telefone': '(19)98228-5101'
+        'telefone': '(19)98228-5101',
+        'acompanhante' : {}
     },
     '416.769.548-05':{
         'nome': 'Cezar Rull',
         'idade': 18,
-        'telefone': '(19)99944-0521'
+        'telefone': '(19)99944-0521',
+        'acompanhante' : {}
     },
     '287.988.818-25':{
         'nome': 'Lucia',
         'idade': 18,
-        'telefone': '(19)99908-7744'
+        'telefone': '(19)99908-7744',
+        'acompanhante' : {}
     }
     
     }
@@ -743,8 +746,7 @@ Escolha uma das opções a baixo:
                                             selectAeroportoOrigem = dicAeroportos[regiao][estado][0]
                                         elif selectAeroportoOrigem == '2':
                                             selectAeroportoOrigem = dicAeroportos[regiao][estado][1]
-                                        elif selectAeroportoOrigem == '3':
-                                            selectAeroportoOrigem = dicAeroportos[regiao][estado][2]
+
                                         print(f'Aeroporto de origem escolhido: {selectAeroportoOrigem}')
                                         input('Pressione ENTER para continuar...')
                     
@@ -783,6 +785,7 @@ Escolha uma das opções a baixo:
                                             selectAeroportoDestino = dicAeroportos[regiao][estado][0]
                                         elif selectAeroportoDestino == '2':
                                             selectAeroportoDestino = dicAeroportos[regiao][estado][1]
+                                        
                                         print(f'Aeroporto de destino escolhido: {selectAeroportoDestino}')
                                         input('Pressione ENTER para continuar...')
 
@@ -1247,9 +1250,9 @@ Escolha uma das opções a baixo:
 
                                         for voo in dicPassagensVoos:
                                             for cpf in dicPassagensVoos[voo]:
-                                                    contPassageirosVoo += (len(dicPassagensVoos[voo][cpf].keys())/2) + len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())
+                                                    contPassageirosVoo += (len(dicPassagensVoos[voo].keys())) + len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())
                                                 
-                                            print(f'{voo}: {contPassageirosVoo} passageiros')
+                                            print(f'{voo}: {contPassageirosVoo:.0f} passageiros')
                                             optionListarVoos = '2'
                                             verifOptionPassageirosVoo = True
                                     else:
@@ -1273,16 +1276,18 @@ Escolha uma das opções a baixo:
                                         else:
                                             verifOptionPassageirosVoo = True
                                             if codVoo in dicPassagensVoos.keys():
-                                                for codigo in dicPassagensVoos:
-                                                    if codVoo == codigo:
                                                         print('==================')
                                                         print(f'Código do voo: {codVoo}\n')
-                                                        print(f'Número de passageiros: {contPassageirosVoo}')
+                                                        print(f'Número de passageiros: {contPassageirosVoo:.0f}')
                                                         print('==================\n')
-                                                        for c, dados in dicPassagensVoos[codigo].items():
+                                                        for cpf, dados in dicPassagensVoos[codVoo].items():
                                                             print('==================')
-                                                            print(f'CPF: {c}')
-                                                            print(f'Nome: {dados}')
+                                                            print(f'CPF: {cpf}')
+                                                            print(f'Nome: {dados['nome']}')
+                                                            for cpfAcompanhante in passageiros[cpf]['acompanhante']:
+                                                                print(f'Acompanhantes:\n - CPF: {cpfAcompanhante}\n - Nome: {passageiros[cpf]['acompanhante'][cpfAcompanhante]['nome']}' 
+                                                                    if passageiros[cpf]['acompanhante'] != ''
+                                                                    else '')
                                                             print('==================')
                                                         verifCodVoo = True
                                             else:
@@ -1434,7 +1439,7 @@ Escolha uma das opções a baixo:
                                                         qtdPassagens = int(qtdPassagens)
                                                         listaPassageirosIncluidos = []
 
-                                                        if qtdPassagens > 1:
+                                                        if qtdPassagens >= 1:
                                                             for i in range(2, qtdPassagens+1):
                                                                 
                                                                 print(f'Digite os dados do {i}º passageiro: ')
@@ -1920,8 +1925,8 @@ Escolha uma das opções a baixo:
                                                         
                                                             voos[codVoo]['lugares'] -= 1
                                                             dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                                'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
-                                                                'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                'nome' :  passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado]['nome'],
+                                                                'idade' :  passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado]['idade'],
                                                                 'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
                                                                 'cpfResponsavel' : cpfVendaFormatado,
                                                                 'nomeResponsavel' : passageiros[cpfVendaFormatado]['nome']
@@ -1930,9 +1935,12 @@ Escolha uma das opções a baixo:
                                                             listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
                                                 print(f'===================')       
                                                 for cpf in listaPassageirosIncluidos:
-                                                    print(f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo} como acompanhante de {passageiros[cpfVendaFormatado]['nome']}' 
-                                                            if int(passageiros[cpf]['idade']) < 18 else f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo}')
-                                                print(f'===================') 
+                                                    print(f'{passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado]['nome']} foi incluido no voo: {codVoo} como acompanhante de {passageiros[cpfVendaFormatado]['nome']}' 
+                                                            if int(passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado]['idade']) < 18 else f'{passageiros[cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado]['nome']} foi incluido no voo: {codVoo}')
+                                                print(f'===================')
+                                                input(f'Pressione ENTER para continuar..')
+                                                os.system('cls' if os.name == 'nt' else 'clear')
+                                                
                                                 listaPassageirosIncluidos = []
                                             else:
                                                 voos[codVoo]['lugares'] -= 1
@@ -2006,12 +2014,13 @@ Escolha uma das opções a baixo:
                                                 input(f'Pressione ENTER para continuar..')
                                                 os.system('cls' if os.name == 'nt' else 'clear')
                                             else:   
-                                                del dicPassagensVoos[codVoo][cpfCancelarFormatado]
-                                                print('Passagem cancelada com sucesso!')
 
+                                                print('Passagem cancelada com sucesso!')
                                                 contPassageirosVoo = 0
                                                 contPassageirosVoo += len(dicPassagensVoos[codVoo][cpfCancelarFormatado]['acompanhante'])+1
                                                 voos[codVoo]['lugares'] += contPassageirosVoo
+                                                del dicPassagensVoos[codVoo][cpfCancelarFormatado]
+                                                break
                                         else:
                                             contNaoEncontrado += 1
                                         if contNaoEncontrado == len(dicRegioesBrasil):
