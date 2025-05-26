@@ -15,14 +15,7 @@ passageiros = {
         'acompanhante' : {},
         'passagens' : {}
     },
-    '287.988.818-25':{
-        'nome': 'Lucia',
-        'idade': 18,
-        'telefone': '(19)99908-7744',
-        'acompanhante' : {},
-        'passagens' : {}
-    }
-    
+
     }
 voos = {
     'v-1':{
@@ -223,6 +216,8 @@ dicAeroportos = {
         ]
     }
 }
+
+listaPassagens = []
 
 contPessoas = 0
 lugares = 40
@@ -1268,8 +1263,10 @@ Escolha uma das opções a baixo:
                                         for voo in dicPassagensVoos:
                                             contPassageirosVoo = 0
                                             for cpf in dicPassagensVoos[voo]:
-                                                    contPassageirosVoo += (len(dicPassagensVoos[voo].keys())) + len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())
-                                                
+                                                if dicPassagensVoos[voo][cpf]['acompanhante'] != {''}:
+                                                    contPassageirosVoo += len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())+1
+                                                else:
+                                                    contPassageirosVoo += 1
                                             print(f'{voo}: {contPassageirosVoo:.0f} passageiros')
                                             optionListarVoos = '2'
                                             verifOptionPassageirosVoo = True
@@ -1295,8 +1292,9 @@ Escolha uma das opções a baixo:
                                             verifOptionPassageirosVoo = True
                                             if codVoo in dicPassagensVoos.keys():
                                                         print('==================')
-                                                        print(f'Código do voo: {codVoo}\n')
+                                                        print(f'Código do voo: {codVoo}')
                                                         print(f'Número de passageiros: {contPassageirosVoo:.0f}')
+                                                        print(f'Lugares disponíveis: {voos[codVoo]['lugares']}')
                                                         print('==================\n')
                                                         for cpf, dados in dicPassagensVoos[codVoo].items():
                                                             print('==================')
@@ -1416,7 +1414,7 @@ Escolha uma das opções a baixo:
                                     os.system('cls' if os.name == 'nt' else 'clear')
                                     continue
 
-                                if passageiros[cpfVendaFormatado]['idade'] < 18:
+                                if int(passageiros[cpfVendaFormatado]['idade']) < 18:
                                     print(f'{passageiros[cpfVendaFormatado]['nome']} não possui idade suficiente para comprar passagens aéreas')
                                     continue
 
@@ -1465,10 +1463,10 @@ Escolha uma das opções a baixo:
 
                                                                 if len(dicPassagensVoos[codVoo].keys()) > 0:
                                                                     for cpf in dicPassagensVoos[codVoo]:
-                                                                        if dicPassagensVoos[voo][cpf]['acompanhante'] != {}:
-                                                                            contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys())) + len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())
+                                                                        if dicPassagensVoos[codVoo][cpf]['acompanhante'] != {''}:
+                                                                            contPassageirosVoo += 1 + len(dicPassagensVoos[codVoo][cpf]['acompanhante'].keys())
                                                                         else:
-                                                                            contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys()))
+                                                                            contPassageirosVoo += 1
 
                                                                 passagem = f'p{contPassageirosVoo+1}_{codVoo}'
 
@@ -1768,10 +1766,10 @@ Escolha uma das opções a baixo:
                                         else:
                                             if len(dicPassagensVoos[codVoo].keys()) > 0:
                                                 for cpf in dicPassagensVoos[codVoo]:
-                                                    if dicPassagensVoos[voo][cpf]['acompanhante'] != {}:
-                                                        contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys())) + len(dicPassagensVoos[voo][cpf]['acompanhante'].keys())
+                                                    if dicPassagensVoos[codVoo][cpf]['acompanhante'] != {''}:
+                                                        contPassageirosVoo += 1 + len(dicPassagensVoos[codVoo][cpf]['acompanhante'].keys())
                                                     else:
-                                                        contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys()))
+                                                        contPassageirosVoo += 1
 
                                             passagem = f'p{contPassageirosVoo+1}_{codVoo}'
 
@@ -1798,17 +1796,17 @@ Escolha uma das opções a baixo:
                                             listaPassageirosIncluidos = []
 
                                             if qtdPassagens > 1:
-                                                contCadastroViagem = 2
+                                                contCadastroViagem = 1
                                                 while contCadastroViagem <= qtdPassagens:
                                                     if len(dicPassagensVoos[codVoo].keys()) > 0:
                                                         for cpf in dicPassagensVoos[codVoo]:
-                                                            if dicPassagensVoos[codVoo][cpf]['acompanhante'] != {}:
-                                                                contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys())) + len(dicPassagensVoos[codVoo][cpf]['acompanhante'].keys())
+                                                            if dicPassagensVoos[codVoo][cpf]['acompanhante'] != {''}:
+                                                                contPassageirosVoo += 1 + len(dicPassagensVoos[codVoo][cpf]['acompanhante'].keys())
                                                             else:
-                                                                contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys()))
+                                                                contPassageirosVoo += 1
 
                                                     passagem = f'p{contPassageirosVoo+1}_{codVoo}'
-                                                    print(f'Digite os dados do {contCadastroViagem}º passageiro: ')
+                                                    print(f'Digite os dados do {contCadastroViagem+1}º passageiro: ')
                                                     verifCpfPassageiro = False
                                                     while verifCpfPassageiro == False:
                                                         cpfPassageiro = input('Digite o CPF do passageiro: ')
@@ -2072,27 +2070,7 @@ Escolha uma das opções a baixo:
                                                 listaPassageirosIncluidos = []
 
                                             else:
-                                                if len(dicPassagensVoos[codVoo].keys()) > 0:
-                                                    for cpf in dicPassagensVoos[codVoo]:
-                                                        if dicPassagensVoos[codVoo][cpf]['acompanhante'] != {}:
-                                                            contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys())) + len(dicPassagensVoos[codVoo][cpf]['acompanhante'].keys())
-                                                        else:
-                                                            contPassageirosVoo += (len(dicPassagensVoos[codVoo].keys()))
 
-                                                passagem = f'p{contPassageirosVoo+1}_{codVoo}'
-                                                voos[codVoo]['lugares'] -= 1
-                                                dicPassagensVoos[codVoo][cpfVendaFormatado] = {
-                                                    'nome' : passageiros[cpfVendaFormatado]['nome'],
-                                                    'idade': passageiros[cpfVendaFormatado]['idade'],
-                                                    'telefone' : passageiros[cpfVendaFormatado]['telefone'],
-                                                    'acompanhante' : {},
-                                                    'passagem' : {
-                                                        passagem : {'pagador' : cpfVendaFormatado}
-                                                    }
-                                                }
-                                                passageiros[cpfVendaFormatado]['passagens'][passagem] = {
-                                                    'pagador' : cpfVendaFormatado
-                                                }
                                                 print(f'{passageiros[cpfVendaFormatado]['nome']} foi incluido(a) no voo: {codVoo}!')
                                                 input(f'Pressione ENTER para continuar..')
                                                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -2157,13 +2135,26 @@ Escolha uma das opções a baixo:
                                                 input(f'Pressione ENTER para continuar..')
                                                 os.system('cls' if os.name == 'nt' else 'clear')
                                             else:   
-
+                                                verifcodigoVooCancelar = True
                                                 print('Passagem cancelada com sucesso!')
                                                 contPassageirosVoo = 0
                                                 contPassageirosVoo += len(dicPassagensVoos[codVoo][cpfCancelarFormatado]['acompanhante'])+1
                                                 voos[codVoo]['lugares'] += contPassageirosVoo
                                                 del dicPassagensVoos[codVoo][cpfCancelarFormatado]
-                                                break
+
+                                                for passagem in passageiros[cpfCancelarFormatado]['passagens']:
+                                                    if passagem.find(codigoVooCancelar) != -1:
+                                                        cancelarPassagem = passagem
+                                                del passageiros[cpfCancelarFormatado]['passagens'][cancelarPassagem]
+
+                                                for cpfAcompanhante in passageiros[cpfCancelarFormatado]['acompanhante']:
+                                                    for passagemAcompanhante in passageiros[cpfCancelarFormatado]['acompanhante'][cpfAcompanhante]['passagens']:
+                                                        if passagemAcompanhante.find(codigoVooCancelar) != -1:
+                                                            cancelarPassagemAcompanhante = passagemAcompanhante
+                                                del passageiros[cpfCancelarFormatado]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
+                                                input(f'Pressione ENTER para continuar..')
+                                                os.system('cls' if os.name == 'nt' else 'clear')
+                                                continue
                                         else:
                                             contNaoEncontrado += 1
                                         if contNaoEncontrado == len(dicRegioesBrasil):
