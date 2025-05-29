@@ -2800,12 +2800,17 @@ Escolha uma das opções a baixo:
                                             os.system('cls' if os.name == 'nt' else 'clear')
                                             continue
                                     else:
-                                        print(f'Voos em que {passageiros[cpf]['acompanhante'][cpfCancelarFormatado]['nome']} tem passagens:')
-                                        print(f'obs: Este passageiro é acompanhante de: ', end='')
+                                        for cpf in passageiros:
+                                            if cpfCancelarFormatado in passageiros[cpf]['acompanhante']:
+                                                auxCpf = cpf
+                                        print(f'Passageiro encontrado: \nCPF: {cpfCancelarFormatado}\nNome: {passageiros[auxCpf]['acompanhante'][cpfCancelarFormatado]['nome']}')
+                                        print(f'obs: Este passageiro é acompanhante de: ')
+                                           
                                         for cpf in passageiros:
                                             if cpfCancelarFormatado in passageiros[cpf]['acompanhante']:
                                                 print(f'- {passageiros[cpf]['nome']}')
 
+                                        print(f'\nVoos em que {passageiros[cpf]['acompanhante'][cpfCancelarFormatado]['nome']} tem passagens:')
                                         listaCpfCancelarAcompanhante = []
                                         for codVoo in dicPassagensVoos:
                                             for cpf in dicPassagensVoos[codVoo]:
