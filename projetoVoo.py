@@ -997,7 +997,14 @@ Escolha uma das opções a baixo:
                                             verifExcluir = True
 
                                     if excluir == 'S':
+                                        listaCpfApagar = []
                                         del passageiros[cpfAlterar]
+                                        for codVoo in dicPassagensVoos:
+                                            if cpfAlterar in dicPassagensVoos[codVoo].keys():
+                                                listaCpfApagar.append(codVoo)
+                                        for codVoo in listaCpfApagar:
+                                            del dicPassagensVoos[codVoo][cpfAlterar]
+                                            voos[codVoo]['passageiros'] += 1
                                         print(f'Passageiro excluído com sucesso!')
                                         input('Pressione ENTER para continuar...')
                                         os.system('cls' if os.name == 'nt' else 'clear')
@@ -1030,7 +1037,8 @@ Escolha uma das opções a baixo:
                                 print('''Escolha uma das opções a baixo:
 1 - Alterar nome
 2 - Alterar idade
-3 - Voltar ao menu de passageiros''')
+3 - Excluir passageiro
+4 - Voltar ao menu de passageiros''')
                                 optionDados = input('--> ')
                                 if optionDados == '-':
                                     break
@@ -1090,6 +1098,7 @@ Escolha uma das opções a baixo:
 
                                     if nomeAlterar == '-':
                                         break
+                                    
                                     for cpf in passageiros:
                                         if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
                                             passageiros[cpf]['acompanhante'][cpfAlterar]['nome'] = nomeAlterar
@@ -1189,7 +1198,6 @@ Escolha uma das opções a baixo:
                                                 input('Pressione ENTER para continuar...')
                                                 continue
 
-                                        listaCpfApagar = []
                                         for cpf in passageiros:
                                             if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
                                                 listaCpfApagar.append(cpf)
@@ -1231,8 +1239,47 @@ Escolha uma das opções a baixo:
                                             print(f'Idade alterada com sucesso!')
                                             input('Pressione ENTER para continuar...')
                                             os.system('cls' if os.name == 'nt' else 'clear')
-
                                 elif optionDados == '3':
+                                    verifExcluir = False
+                                    while verifExcluir == False:
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        excluir = input(f'Deseja realmente excluir o passageiro {passageiros[cpfAlterar]['acompanhante'][cpfAlterar]['nome']}? (S/N): ').upper()
+
+                                        if excluir == '-':
+                                            break
+
+                                        if excluir not in ['S', 'N']:
+                                            print('Opção inválida, por favor digite S ou N!')
+                                            continue
+                                        else:
+                                            verifExcluir = True
+
+                                    if excluir == 'S':
+                                        for cpf in passageiros:
+                                            if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
+                                                listaCpfApagar.append(cpf)
+
+                                        for cpf in listaCpfApagar:
+                                            del passageiros[cpf]['acompanhante'][cpfAlterar]
+                                            
+                                        dicCpfVooApagar = {}
+                                        for codVoo in dicPassagensVoos:
+                                            for cpf in dicPassagensVoos[codVoo].keys():
+                                                if cpfAlterar in dicPassagensVoos[codVoo][cpf]['acompanhante'].keys():
+                                                    dicCpfVooApagar[codVoo] = {cpf}
+                                        for codVoo in dicCpfVooApagar:
+                                            for cpf in dicCpfVooApagar[codVoo]:
+                                                del dicPassagensVoos[codVoo][cpf]['acompanhante'][cpfAlterar]
+                                                voos[codVoo]['passageiros'] += 1
+                                                
+                                        print(f'Passageiro excluído com sucesso!')
+                                        input('Pressione ENTER para continuar...')
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        break
+                                    elif excluir == 'N':
+                                        continue
+
+                                elif optionDados == '4':
                                     break
 
                     elif optionPassageiros == '3':
