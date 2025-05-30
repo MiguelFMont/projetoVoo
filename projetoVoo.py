@@ -228,7 +228,6 @@ while verifOption == False:
 
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(listaPassagens)
     print('''
         === MENU PRINCIPAL ===
           
@@ -296,8 +295,19 @@ Escolha uma das opções a baixo:
                                 input('Pressione ENTER para continuar...')
                                 continue
                             else:
-                                verifCpf = True
-                                continue
+                                passageiroEncontrado = False
+                                for auxCpf in passageiros:
+                                    if cpf in passageiros[auxCpf]['acompanhante'].keys():
+                                        passageiroEncontrado = True
+                                        
+                                if passageiroEncontrado == True:
+                                    print('\nCPF já cadastrado! Por favor, digite outro CPF!')
+                                    input('Pressione ENTER para continuar...')
+                                    continue
+
+                                else:
+                                    verifCpf = True
+                                    continue
                         else:
                             print('CPF inválido, por favor digite o seu CPF!')
                             input('Pressione ENTER para continuar...')
@@ -310,8 +320,19 @@ Escolha uma das opções a baixo:
                             input('Pressione ENTER para continuar...')
                             continue
                         else:
-                            verifCpf = True
-                            continue
+                            passageiroEncontrado = False
+                            for auxCpf in passageiros:
+                                if cpf in passageiros[auxCpf]['acompanhante'].keys():
+                                    passageiroEncontrado = True
+                                    
+                            if passageiroEncontrado == True:
+                                print('\nCPF já cadastrado! Por favor, digite outro CPF!')
+                                input('Pressione ENTER para continuar...')
+                                continue
+
+                            else:
+                                verifCpf = True
+                                continue
                     else:   
                         print('CPF inválido, por favor digite o seu CPF!')
                         input('Pressione ENTER para continuar...')
@@ -645,7 +666,6 @@ Escolha uma das opções a baixo:
                                                 for passagens in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
                                                     print(f'{passagens} - pagador: {passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagens]['pagador']}')
                                     print('==================')
-                                    print(listaPassagens)
                                 input('Pressione ENTER para continuar...')
                                 os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -1907,9 +1927,9 @@ Escolha uma das opções a baixo:
                                                             print('==================')
                                                             print(f'CPF: {cpf}')
                                                             print(f'Nome: {dados['nome']}')
-                                                            for cpfAcompanhante in passageiros[cpf]['acompanhante']:
-                                                                print(f'Acompanhantes:\n - CPF: {cpfAcompanhante}\n - Nome: {passageiros[cpf]['acompanhante'][cpfAcompanhante]['nome']}' 
-                                                                    if passageiros[cpf]['acompanhante'] != ''
+                                                            for cpfAcompanhante in dicPassagensVoos[codVoo][cpf]['acompanhante']:
+                                                                print(f'Acompanhantes:\n - CPF: {cpfAcompanhante}\n - Nome: {dicPassagensVoos[codVoo][cpf]['acompanhante'][cpfAcompanhante]['nome']}' 
+                                                                    if dicPassagensVoos[codVoo][cpf]['acompanhante'] != ''
                                                                     else '')
                                                             print('==================')
                                                         verifCodVoo = True
@@ -2082,9 +2102,13 @@ Escolha uma das opções a baixo:
 
                                                                 auxContPassageirosVoo = contPassageirosVoo
 
-                                                                while passagem in listaPassagens:
-                                                                    passagem = passagem.replace(f'p{auxContPassageirosVoo+1}', f'p{auxContPassageirosVoo+2}')
-                                                                    auxContPassageirosVoo += 1
+                                                                passagemUtilizada = True
+                                                                while passagemUtilizada:
+                                                                    if passagem in listaPassagens:
+                                                                        auxContPassageirosVoo += 1
+                                                                        passagem = f'p{auxContPassageirosVoo+1}_{codVoo}'
+                                                                    else:
+                                                                        passagemUtilizada = False
 
                                                                 auxContPassageirosVoo = 0
 
@@ -2142,6 +2166,8 @@ Escolha uma das opções a baixo:
                                                                             continue
                                                                         else:
                                                                             print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                            input('Pressione ENTER para continuar...')
+                                                                            os.system('cls' if os.name == 'nt' else 'clear')
                                                                             continue
 
                                                                     else:
@@ -2336,8 +2362,8 @@ Escolha uma das opções a baixo:
                                                                         }
                                                                         voos[codVoo]['lugares'] -= 1
                                                                         dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante'][cpfAcompanhanteFormatado] = {
-                                                                            'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
-                                                                            'idade' : passageiros[cpfAcompanhanteFormatado]['idade'],
+                                                                            'nome' : nome,
+                                                                            'idade' : idade,
                                                                             'telefoneResponsavel' : passageiros[cpfVendaFormatado]['telefone'],
                                                                             'cpfResponsavel' : cpfVendaFormatado,
                                                                             'nomeResponsavel' : passageiros[cpfVendaFormatado]['nome'],
@@ -2396,6 +2422,16 @@ Escolha uma das opções a baixo:
 
                                             passagem = f'p{contPassageirosVoo+1}_{codVoo}'
 
+                                            auxContPassageirosVoo = contPassageirosVoo
+
+                                            passagemUtilizada = True
+                                            while passagemUtilizada:
+                                                if passagem in listaPassagens:
+                                                    auxContPassageirosVoo += 1
+                                                    passagem = f'p{auxContPassageirosVoo+1}_{codVoo}'
+                                                else:
+                                                    passagemUtilizada = False
+
                                             verifQtdPassagens = True
                                             qtdPassagens = int(qtdPassagens)
 
@@ -2427,6 +2463,17 @@ Escolha uma das opções a baixo:
                                                                 contPassageirosVoo += 1
 
                                                     passagem = f'p{contPassageirosVoo+1}_{codVoo}'
+
+                                                    auxContPassageirosVoo = contPassageirosVoo
+
+                                                    passagemUtilizada = True
+                                                    while passagemUtilizada:
+                                                        if passagem in listaPassagens:
+                                                            auxContPassageirosVoo += 1
+                                                            passagem = f'p{auxContPassageirosVoo+1}_{codVoo}'
+                                                        else:
+                                                            passagemUtilizada = False
+
                                                     print(f'Digite os dados do {contCadastroViagem+1}º passageiro: ')
                                                     verifCpfPassageiro = False
                                                     while verifCpfPassageiro == False:
@@ -2811,7 +2858,7 @@ Escolha uma das opções a baixo:
                                             if cpfCancelarFormatado in passageiros[cpf]['acompanhante']:
                                                 print(f'- {passageiros[cpf]['nome']}')
 
-                                        print(f'\nVoos em que {passageiros[cpf]['acompanhante'][cpfCancelarFormatado]['nome']} tem passagens:')
+                                        print(f'\nVoos em que {passageiros[auxCpf]['acompanhante'][cpfCancelarFormatado]['nome']} tem passagens:')
                                         listaCpfCancelarAcompanhante = []
                                         for codVoo in dicPassagensVoos:
                                             for cpf in dicPassagensVoos[codVoo]:
@@ -2837,9 +2884,7 @@ Escolha uma das opções a baixo:
                                         else:
                                             verifcodigoVooCancelar = True
                                             print('Passagem cancelada com sucesso!')
-                                            contPassageirosVoo = 0
-                                            contPassageirosVoo += len(dicPassagensVoos[codVoo][cpf]['acompanhante'])+1
-                                            voos[codVoo]['lugares'] += contPassageirosVoo
+                                            voos[codVoo]['lugares'] += 1
                                             for cpf in listaCpfCancelarAcompanhante:
                                                 del dicPassagensVoos[codVoo][cpf]['acompanhante'][cpfCancelarFormatado]
 
