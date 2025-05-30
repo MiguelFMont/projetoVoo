@@ -228,6 +228,7 @@ while verifOption == False:
 
 
     os.system('cls' if os.name == 'nt' else 'clear')
+    print(listaPassagens)
     print('''
         === MENU PRINCIPAL ===
           
