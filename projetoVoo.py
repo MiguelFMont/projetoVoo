@@ -1308,6 +1308,7 @@ Escolha uma das opções a baixo:
                     optionVoo = input('--> ')
 
                     if optionVoo == '-':
+                        menuVoos = False
                         break
 
                     if len(optionVoo) != 1 or option not in listaNumeroVerificacao[0:5]:
@@ -1326,6 +1327,7 @@ Escolha uma das opções a baixo:
                             origem = input('Digite o estado origem do voo: ').title()
 
                             if origem == '-':
+                                menuVoos = False
                                 break
 
                             if origem.isalpha() and len(origem) == 2:
@@ -1361,6 +1363,7 @@ Escolha uma das opções a baixo:
                             input('Pressione ENTER para continuar...')
                         
                         if origem == '-':
+                            menuVoos = False
                             continue
 
                         verifDestino = False
@@ -1369,6 +1372,7 @@ Escolha uma das opções a baixo:
                             destino = input('Digite o estado destino do voo: ').title()
 
                             if destino == '-':
+                                menuVoos = False
                                 break
 
                             if destino.isalpha() and len(destino) == 2:
@@ -1403,6 +1407,7 @@ Escolha uma das opções a baixo:
                             input('Pressione ENTER para continuar...')
                         
                         if destino == '-':
+                                menuVoos = False
                                 continue
                         
                         verifAeroportoOrigem = False
@@ -1424,6 +1429,7 @@ Escolha uma das opções a baixo:
                                         selectAeroportoOrigem = input('\nSelecione o aeroporto de origem: ')
 
                                         if selectAeroportoOrigem == '-':
+                                            menuVoos = False
                                             verifAeroportoOrigem = True
                                             break
 
@@ -1442,6 +1448,7 @@ Escolha uma das opções a baixo:
                                             input('Pressione ENTER para continuar...')
                         
                         if selectAeroportoOrigem == '-':
+                            menuVoos = False
                             continue
 
                         verifAeroportoDestino = False
@@ -1463,6 +1470,7 @@ Escolha uma das opções a baixo:
                                         selectAeroportoDestino = input('\nSelecione o aeroporto de Destino: ').title()
 
                                         if selectAeroportoDestino == '-':
+                                            menuVoos = False
                                             verifAeroportoDestino = True
                                             break
 
@@ -1481,6 +1489,7 @@ Escolha uma das opções a baixo:
                                             input('Pressione ENTER para continuar...')
 
                         if selectAeroportoDestino == '-':
+                            menuVoos = False
                             continue
 
                         verifDataHora = False
@@ -1489,6 +1498,7 @@ Escolha uma das opções a baixo:
                             dataHora = input('Informe a data e hora (formato: DD/MM/AAAA HH:MM): ')
 
                             if dataHora == '-':
+                                menuVoos = False
                                 break
 
                             if len(dataHora) > 16:
@@ -1537,6 +1547,7 @@ Escolha uma das opções a baixo:
                                 print('Formato incorreto. Use DD/MM/AAAA HH:MM.')
 
                         if dataHora == '-':
+                                menuVoos = False
                                 continue
                         
                         verifCompanhia = False
@@ -1556,6 +1567,7 @@ Escolha uma das opções a baixo:
                                             companhia = input('Digite a companhia aérea: ').title()
 
                                             if companhia == '-':
+                                                menuVoos = False
                                                 verifCompanhia = True
                                                 break
 
@@ -1576,6 +1588,7 @@ Escolha uma das opções a baixo:
                                                 os.system('cls' if os.name == 'nt' else 'clear')
 
                         if companhia == '-':
+                            menuVoos = False
                             continue
 
                         print('==================')
@@ -1650,6 +1663,7 @@ Escolha uma das opções a baixo:
                                 selectConsultaVoo = input('--> ')
 
                                 if selectConsultaVoo == '-':
+                                    menuVoos = False
                                     break
 
                                 if selectConsultaVoo == '' or selectConsultaVoo not in listaNumeroVerificacao[0:5]:
@@ -1668,6 +1682,7 @@ Escolha uma das opções a baixo:
                                             vooConsulta = input('Digite o código do voo que deseja consultar. Ex: v-1: ')
 
                                             if vooConsulta == '-':
+                                                menuVoos = False
                                                 break
 
                                             if vooConsulta == '' or vooConsulta[0] != 'v' or vooConsulta[1] != '-' or vooConsulta[2:].isdigit() == False:
@@ -1707,6 +1722,7 @@ Escolha uma das opções a baixo:
                                             consultaOrigem = input(f'Digite a origem:  ').title()
 
                                             if consultaOrigem == '-':
+                                                menuVoos = False
                                                 break
 
                                             if consultaOrigem.isalpha() and len(consultaOrigem) == 2:
@@ -1752,6 +1768,7 @@ Escolha uma das opções a baixo:
                                             consultaDestino = input(f'Digite o destino:  ').title()
 
                                             if consultaDestino == '-':
+                                                menuVoos = False
                                                 break
 
                                             if consultaDestino.isalpha() and len(consultaDestino) == 2:
@@ -1798,6 +1815,7 @@ Escolha uma das opções a baixo:
                                             consultaEscala = input('--> ')
 
                                             if consultaEscala == '-':
+                                                menuVoos = False
                                                 break
 
                                             if consultaEscala == '' or consultaEscala not in listaNumeroVerificacao[0:3]:
@@ -1813,6 +1831,7 @@ Escolha uma das opções a baixo:
                                                         consultaEscalaOrigem = input(f'Digite a origem:  ').title()
 
                                                         if consultaEscalaOrigem == '-':
+                                                            menuVoos = False
                                                             break
 
                                                         if consultaEscalaOrigem.isalpha() and len(consultaEscalaOrigem) == 2:
@@ -1854,6 +1873,7 @@ Escolha uma das opções a baixo:
                                                         consultaEscalaDestino = input(f'Digite o Destino:  ').title()
 
                                                         if consultaEscalaDestino == '-':
+                                                            menuVoos = False
                                                             break
 
                                                         if consultaEscalaDestino.isalpha() and len(consultaEscalaDestino) == 2:
@@ -1929,6 +1949,7 @@ Escolha uma das opções a baixo:
                                 optionListarVoos = input('--> ')
 
                                 if optionListarVoos == '-':
+                                    menuVoos = False
                                     break
 
                                 if len(optionListarVoos) != 1 or optionListarVoos not in listaNumeroVerificacao[0:2]:
@@ -1965,6 +1986,7 @@ Escolha uma das opções a baixo:
                                             codVoo = input('Digite o código do voo que deseja exibir os passageiros. Ex: v-1: ')
 
                                             if codVoo == '-':
+                                                menuVoos = False
                                                 break
 
                                             if codVoo == '' or codVoo not in voos.keys():
@@ -2015,6 +2037,7 @@ Escolha uma das opções a baixo:
                                 opcaoPassagem = input('--> ')
 
                                 if opcaoPassagem == '-':
+                                    menuVoos = False
                                     break
 
                                 if len(opcaoPassagem) != 1 or opcaoPassagem not in ['1', '2', '3']:
@@ -2037,6 +2060,7 @@ Escolha uma das opções a baixo:
                                         passagem = ''
 
                                         if codVoo == '-':
+                                            menuVoos = False
                                             break
 
                                         if codVoo not in voos or codVoo == '':
@@ -2057,12 +2081,14 @@ Escolha uma das opções a baixo:
                                         dicPassagensVoos[codVoo] = {}
                                     
                                     if codVoo == '-':
+                                            menuVoos = False
                                             continue
                                     verifCpfVenda = False
                                     while verifCpfVenda == False:
                                         cpfVenda = input('Digite o CPF do passageiro: ')
 
                                         if cpfVenda == '-':
+                                            menuVoos = False
                                             break
                                         
                                         if len(cpfVenda) == 14:
@@ -2091,6 +2117,7 @@ Escolha uma das opções a baixo:
                                             continue
 
                                     if cpfVenda == '-':
+                                            menuVoos = False
                                             break
 
                                     if cpfVendaFormatado not in passageiros:
@@ -2114,6 +2141,7 @@ Escolha uma das opções a baixo:
                                             opcaoVendaPassagem = input('--> ')
 
                                             if opcaoVendaPassagem == '-':
+                                                menuVoos = False
                                                 break
                                             
                                             if opcaoVendaPassagem == '' or opcaoVendaPassagem not in ['1', '2']:
@@ -2130,6 +2158,7 @@ Escolha uma das opções a baixo:
                                                         qtdPassagens = input(f'Digite o número de passagens que deseja incluir: ')
                                                         
                                                         if qtdPassagens == '-':
+                                                            menuVoos = False
                                                             break
                                                         
                                                         elif qtdPassagens == '' or not qtdPassagens.isdigit() or int(qtdPassagens) > voos[codVoo]['lugares'] or int(qtdPassagens) < 1 :
@@ -2173,6 +2202,7 @@ Escolha uma das opções a baixo:
                                                                         cpfPassageiro = input('Digite o CPF do passageiro: ')
 
                                                                         if cpfPassageiro == '-':
+                                                                            menuVoos = False
                                                                             break
                                                                         
                                                                         if len(cpfPassageiro) == 14:
@@ -2201,6 +2231,7 @@ Escolha uma das opções a baixo:
                                                                             continue
 
                                                                     if cpfPassageiro == '-':
+                                                                            menuVoos = False
                                                                             break
                                                                     
                                                                     if cpfAcompanhanteFormatado in passageiros or cpfAcompanhanteFormatado in passageiros[cpfVendaFormatado]['acompanhante']:
@@ -2252,6 +2283,8 @@ Escolha uma das opções a baixo:
 
                                                                             else:
                                                                                 print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                                input('Pressione ENTER para continuar...')
+                                                                                os.system('cls' if os.name == 'nt' else 'clear')
                                                                                 continue
 
                                                                     else:
@@ -2263,6 +2296,7 @@ Escolha uma das opções a baixo:
                                                                             nome = input('Digite o nome do(a) acompanhante: ').title()
 
                                                                             if nome == '-':
+                                                                                menuVoos = False
                                                                                 break
 
                                                                             contEspacosVazios = 0
@@ -2308,6 +2342,7 @@ Escolha uma das opções a baixo:
                                                                             verifNome = True
 
                                                                         if nome == '-':
+                                                                            menuVoos = False
                                                                             break
                                                                         
                                                                         verifIdade = False
@@ -2317,6 +2352,7 @@ Escolha uma das opções a baixo:
                                                                             idade = input('Digite a idade do(a) acompanhante: ')
 
                                                                             if idade == '-':
+                                                                                menuVoos = False
                                                                                 break
 
                                                                             if idade.isdigit() == False or int(idade) < 1 or int(idade) > 120:
@@ -2327,6 +2363,7 @@ Escolha uma das opções a baixo:
                                                                                 verifIdade = True
 
                                                                         if idade == '-':
+                                                                                menuVoos = False
                                                                                 break
                                                                         
                                                                         if int(idade) >= 18:
@@ -2337,6 +2374,7 @@ Escolha uma das opções a baixo:
                                                                                 contTelefone = 0
 
                                                                                 if telefone == '-':
+                                                                                    menuVoos = False
                                                                                     break
 
                                                                                 if len(telefone) == 14:
@@ -2381,6 +2419,7 @@ Escolha uma das opções a baixo:
                                                                                     continue
                                                                             
                                                                             if telefone == '-':
+                                                                                menuVoos = False
                                                                                 break
                                                                             passageiros[cpfAcompanhanteFormatado] = {
                                                                             'nome' : passageiros[cpfAcompanhanteFormatado]['nome'],
@@ -2450,6 +2489,7 @@ Escolha uma das opções a baixo:
                                                     break
 
                                         if opcaoVendaPassagem == '-':
+                                            menuVoos = False
                                             continue
                                     else:       
                                         print(f'Passageiro encontrado:\nCPF: {cpfVendaFormatado} \nNome: {passageiros[cpfVendaFormatado]['nome']}')   
@@ -2460,6 +2500,7 @@ Escolha uma das opções a baixo:
                                             qtdPassagens = input(f'Digite o número de passagens que deseja incluir: ')
                                             
                                             if qtdPassagens == '-':
+                                                menuVoos = False
                                                 break
                                             
                                             elif qtdPassagens == '' or not qtdPassagens.isdigit() or int(qtdPassagens) > voos[codVoo]['lugares'] or int(qtdPassagens) < 1 :
@@ -2535,6 +2576,7 @@ Escolha uma das opções a baixo:
                                                             cpfPassageiro = input('Digite o CPF do passageiro: ')
 
                                                             if cpfPassageiro == '-':
+                                                                menuVoos = False
                                                                 break
                                                             
                                                             if len(cpfPassageiro) == 14:
@@ -2563,6 +2605,7 @@ Escolha uma das opções a baixo:
                                                                 continue
 
                                                         if cpfPassageiro == '-':
+                                                                menuVoos = False
                                                                 break
                                                         
                                                         if cpfAcompanhanteFormatado in passageiros or cpfAcompanhanteFormatado in passageiros[cpfVendaFormatado]['acompanhante']:
@@ -2588,6 +2631,8 @@ Escolha uma das opções a baixo:
                                                                     continue
                                                                 else:
                                                                     print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                    input('Pressione ENTER para continuar...')
+                                                                    os.system('cls' if os.name == 'nt' else 'clear')
                                                                     continue
                                                             else:
                                                                 if cpfAcompanhanteFormatado not in dicPassagensVoos[codVoo][cpfVendaFormatado]['acompanhante']:
@@ -2613,6 +2658,8 @@ Escolha uma das opções a baixo:
                                                                     continue
                                                                 else:
                                                                     print(f'Passageiro já possui uma passagem comprada no voo: {codVoo}')
+                                                                    input('Pressione ENTER para continuar...')
+                                                                    os.system('cls' if os.name == 'nt' else 'clear')
                                                                     continue
 
                                                         else:
@@ -2624,6 +2671,7 @@ Escolha uma das opções a baixo:
                                                                 nome = input('Digite o nome do(a) acompanhante: ').title()
 
                                                                 if nome == '-':
+                                                                    menuVoos = False
                                                                     break
 
                                                                 contEspacosVazios = 0
@@ -2669,6 +2717,7 @@ Escolha uma das opções a baixo:
                                                                 verifNome = True
 
                                                             if nome == '-':
+                                                                menuVoos = False
                                                                 break
                                                             
                                                             verifIdade = False
@@ -2678,6 +2727,7 @@ Escolha uma das opções a baixo:
                                                                 idade = input('Digite a idade do(a) acompanhante: ')
 
                                                                 if idade == '-':
+                                                                    menuVoos = False
                                                                     break
 
                                                                 if idade.isdigit() == False or int(idade) < 1 or int(idade) > 120:
@@ -2688,7 +2738,8 @@ Escolha uma das opções a baixo:
                                                                     verifIdade = True
 
                                                             if idade == '-':
-                                                                    break
+                                                                menuVoos = False
+                                                                break
                                                             
                                                             if int(idade) >= 18:
                                                                 verifTelefone = False
@@ -2698,6 +2749,7 @@ Escolha uma das opções a baixo:
                                                                     contTelefone = 0
 
                                                                     if telefone == '-':
+                                                                        menuVoos = False
                                                                         break
 
                                                                     if len(telefone) == 14:
@@ -2742,6 +2794,7 @@ Escolha uma das opções a baixo:
                                                                         continue
                                                                 
                                                                 if telefone == '-':
+                                                                    menuVoos = False
                                                                     break
 
                                                                 passageiros[cpfAcompanhanteFormatado] = {
@@ -2820,6 +2873,7 @@ Escolha uma das opções a baixo:
                                         cpfCancelar = input('Digite o CPF do passageiro para cancelar a passagem: ')
 
                                         if cpfCancelar == '-':
+                                            menuVoos = False
                                             break
 
                                         if len(cpfCancelar) == 14:
@@ -2852,7 +2906,8 @@ Escolha uma das opções a baixo:
                                             continue
                                     
                                     if cpfCancelar == '-':
-                                            break
+                                        menuVoos = False
+                                        break
                                     
                                     verifcodigoVooCancelar = False
                                     while not verifcodigoVooCancelar:
@@ -2876,6 +2931,7 @@ Escolha uma das opções a baixo:
                                             codigoVooCancelar = input(f'--> ')
 
                                             if codigoVooCancelar == '-':
+                                                menuVoos = False
                                                 break
 
                                             if codigoVooCancelar == '' or codigoVooCancelar not in dicPassagensVoos:
@@ -2943,8 +2999,11 @@ Escolha uma das opções a baixo:
                                                 break
                                             print(f'Para cancelar a passagem, digite o código do voo (ex: "v-1"): ')
                                             codigoVooCancelar = input(f'--> ')
+
                                             if codigoVooCancelar == '-':
+                                                menuVoos = False
                                                 break
+                                            
                                             if codigoVooCancelar == '' or codigoVooCancelar not in dicPassagensVoos:
                                                 print(f'Código inválido! Por favor, digite novamente.')
                                                 input(f'Pressione ENTER para continuar..')
@@ -2967,6 +3026,7 @@ Escolha uma das opções a baixo:
 
                                 elif opcaoPassagem == '3':
                                     verifMenuPassagem = True
+                                    menuVoos = False
                                     os.system('cls' if os.name == 'nt' else 'clear')
                     elif optionVoo == '5':
                         verifCodVooCancelar = False
@@ -2976,6 +3036,7 @@ Escolha uma das opções a baixo:
                             print(f'obs: Todos os passageiros e acompanhantes deste voo serão excluídos automaticamente')
                             codVooCancelar = input(f'--> ')
                             if codVooCancelar == '-':
+                                menuVoos = False
                                 break
                             if codVooCancelar == '' or codVooCancelar not in voos:
                                 print(f'Código inválido ou voo não cadastrado! Por favor, digite novamente.')
@@ -2985,29 +3046,43 @@ Escolha uma das opções a baixo:
                                 verifCodVooCancelar = True
                                 print(f'Voo encontrado: \nCódigo: {codVooCancelar}\nOrigem: {voos[codVooCancelar]['origem']}\nDestino: {voos[codVooCancelar]['destino']}\nData/Hora: {voos[codVooCancelar]['dataHora']}')
                                 print(f'Voo {codVooCancelar} cancelado com sucesso!')
-                                listaPassagensCancelar = []
-                                listaPassagensAcompanhantesCancelar = []
-                                for cpf in passageiros:
-                                    if passageiros[cpf]['passagens'] != {}:
-                                        for passagem in passageiros[cpf]['passagens']:
-                                            if passagem.find(codVooCancelar) != -1:
-                                                listaPassagensCancelar.append(passagem)
-                                for passagem in listaPassagensCancelar:
-                                    del passageiros[cpf]['passagens'][passagem]
+                                if passageiros != {}:
+                                    dicCpfPassagemCancelar = {}
+                                    listaAuxPassagensCancelar = []
+                                    dicPassagensAcompanhantesCancelar = {}
+                                    listaAuxPassagensAcompanhantesCancelar = []
+                                    for cpf in passageiros:
+                                        if passageiros[cpf]['passagens'] != {}:
+                                            for passagem in passageiros[cpf]['passagens']:
+                                                if passagem.find(codVooCancelar) != -1:
+                                                    listaAuxPassagensCancelar.append(passagem)
+                                                    dicCpfPassagemCancelar[cpf] = listaAuxPassagensCancelar
+                                    
+                                    for cpf in dicCpfPassagemCancelar:
+                                        for passagem in listaAuxPassagensCancelar:
+                                            if passagem in passageiros[cpf]['passagens']:   
+                                                del passageiros[cpf]['passagens'][passagem]
 
-                                for cpf in passageiros:
-                                    if passageiros[cpf]['acompanhante'] != {}:
-                                        for cpfAcompanhante in passageiros[cpf]['acompanhante']:
-                                            if passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'] != {}:
-                                                for passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
-                                                    if passagemAcompanhante.find(codVooCancelar) != -1:
-                                                        listaPassagensAcompanhantesCancelar.append(passagemAcompanhante)
-                                for passagemAcompanhante in listaPassagensAcompanhantesCancelar:
-                                    del passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
+                                    for cpf in passageiros:
+                                        if passageiros[cpf]['acompanhante'] != {}:
+                                            for cpfAcompanhante in passageiros[cpf]['acompanhante']:
+                                                if passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'] != {}:
+                                                    dicPassagensAcompanhantesCancelar[cpf] = {}
+                                                    for passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
+                                                        if passagemAcompanhante.find(codVooCancelar) != -1:
+                                                            listaAuxPassagensAcompanhantesCancelar.append(passagemAcompanhante)
+                                                            dicPassagensAcompanhantesCancelar[cpf][cpfAcompanhante] = listaAuxPassagensAcompanhantesCancelar
+
+                                    for cpf in dicPassagensAcompanhantesCancelar:
+                                        for cpfAcompanhante in dicPassagensAcompanhantesCancelar[cpf]:
+                                            for passagemAcompanhante in listaAuxPassagensAcompanhantesCancelar:
+                                                if passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
+                                                    del passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
                                 if codVooCancelar in dicPassagensVoos:
                                     del dicPassagensVoos[codVooCancelar]
                                 del voos[codVooCancelar]
                                 contVoo -= 1
+
                                 input(f'Pressione ENTER para continuar..')
                                 os.system('cls' if os.name == 'nt' else 'clear')
 
