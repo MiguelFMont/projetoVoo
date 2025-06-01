@@ -3062,6 +3062,8 @@ Escolha uma das opções a baixo:
                                         for passagem in listaAuxPassagensCancelar:
                                             if passagem in passageiros[cpf]['passagens']:   
                                                 del passageiros[cpf]['passagens'][passagem]
+                                            if passagem in listaPassagens:
+                                                listaPassagens.remove(passagem)
 
                                     for cpf in passageiros:
                                         if passageiros[cpf]['acompanhante'] != {}:
@@ -3078,6 +3080,8 @@ Escolha uma das opções a baixo:
                                             for passagemAcompanhante in listaAuxPassagensAcompanhantesCancelar:
                                                 if passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
                                                     del passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
+                                                if passagem in listaPassagens:
+                                                    listaPassagens.remove(passagem)
                                 if codVooCancelar in dicPassagensVoos:
                                     del dicPassagensVoos[codVooCancelar]
                                 del voos[codVooCancelar]
