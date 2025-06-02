@@ -1172,6 +1172,7 @@ Escolha uma das opções a baixo:
                                                 input('Pressione ENTER para continuar...')
                                                 continue
 
+                                        listaCpfApagar = []
                                         for cpf in passageiros:
                                             if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
                                                 listaCpfApagar.append(cpf)
@@ -3093,10 +3094,10 @@ Escolha uma das opções a baixo:
                                                 listaPassagens.remove(passagem)
 
                                     for cpf in passageiros:
+                                        dicPassagensAcompanhantesCancelar[cpf] = {}
                                         if passageiros[cpf]['acompanhante'] != {}:
                                             for cpfAcompanhante in passageiros[cpf]['acompanhante']:
                                                 if passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'] != {}:
-                                                    dicPassagensAcompanhantesCancelar[cpf] = {}
                                                     for passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
                                                         if passagemAcompanhante.find(codVooCancelar) != -1:
                                                             listaAuxPassagensAcompanhantesCancelar.append(passagemAcompanhante)
@@ -3109,7 +3110,9 @@ Escolha uma das opções a baixo:
                                                     del passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
                                     
                                                 if passagem in listaPassagens:        
+
                                                     listaPassagens.remove(passagem)
+
                                 if codVooCancelar in dicPassagensVoos:
                                     del dicPassagensVoos[codVooCancelar]
                                 del voos[codVooCancelar]
