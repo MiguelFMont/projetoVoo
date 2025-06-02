@@ -389,6 +389,7 @@ Escolha uma das opções a baixo:
                             cpfResponsavel = input('Digite o CPF do responsável: ')
 
                             if cpfResponsavel == '-':
+                                verifCpfResponsavel = True
                                 break
 
                             if len(cpfResponsavel) == 14:
@@ -401,38 +402,34 @@ Escolha uma das opções a baixo:
                                         contCarCpfResponsavel += 1
                                 if contNumCpfResponsavel == 11 and contCarCpfResponsavel == 3 and cpfResponsavel[3] == '.' and cpfResponsavel[7] == '.' and cpfResponsavel[11] == '-':
                                     if cpfResponsavel in passageiros.keys():
-                                        if int(passageiros[cpfResponsavel]['idade']) >= 18:
-                                            passageiros[cpfResponsavel]['acompanhante'][cpf] = {
-                                                'nome': nome,
-                                                'idade': idade,
-                                                'telefoneResponsavel': passageiros[cpfResponsavel]['telefone'],
-                                                'cpfResponsavel' : cpfResponsavel,
-                                                'nomeResponsavel' : passageiros[cpfResponsavel]['nome'],
-                                                'passagens' : {}
-                                            }   
+                                        passageiros[cpfResponsavel]['acompanhante'][cpf] = {
+                                            'nome': nome,
+                                            'idade': idade,
+                                            'telefoneResponsavel': passageiros[cpfResponsavel]['telefone'],
+                                            'cpfResponsavel' : cpfResponsavel,
+                                            'nomeResponsavel' : passageiros[cpfResponsavel]['nome'],
+                                            'passagens' : {}
+                                        }   
 
-                                            os.system('cls' if os.name == 'nt' else 'clear')
-                                            print('==================')
-                                            print(f'Passageiro cadastrado com sucesso!')
-                                            print(f'CPF: {cpf}')
-                                            print(f'Nome: {nome}')
-                                            print(f'Idade: {idade}')
-                                            print(f'Telefone do Responsável: {passageiros[cpf]['telefoneResponsavel']}')
-                                            print(f'CPF do responsável: {passageiros[cpf]['cpfResponsavel']}')
-                                            print(f'Nome do responsável: {passageiros[cpf]['nomeResponsavel']}')
-                                            print('==================')
-                                            input('Pressione ENTER para continuar...')
-                                            os.system('cls' if os.name == 'nt' else 'clear')
+                                        os.system('cls' if os.name == 'nt' else 'clear')
+                                        print('==================')
+                                        print(f'Passageiro cadastrado com sucesso!')
+                                        print(f'CPF: {cpf}')
+                                        print(f'Nome: {nome}')
+                                        print(f'Idade: {idade}')
+                                        print(f'Telefone do Responsável: {passageiros[cpf]['telefoneResponsavel']}')
+                                        print(f'CPF do responsável: {passageiros[cpf]['cpfResponsavel']}')
+                                        print(f'Nome do responsável: {passageiros[cpf]['nomeResponsavel']}')
+                                        print('==================')
+                                        input('Pressione ENTER para continuar...')
+                                        os.system('cls' if os.name == 'nt' else 'clear')
 
-                                            pessoas += 1
-                                            contPessoas += 1
-                                            verifIdade = True
-                                            verifCpfResponsavel = True
-                                            continue
-                                        
-                                        else:
-                                            print(f'O passageiro responsável precisa ser maior de idade')
-                                            continue
+                                        pessoas += 1
+                                        contPessoas += 1
+                                        verifIdade = True
+                                        verifCpfResponsavel = True
+                                        continue
+
                                     else:
                                         print(f'Não há passageiros cadastrados com esse CPF ({cpfResponsavel})')
                                         continue
@@ -1220,7 +1217,7 @@ Escolha uma das opções a baixo:
                                     verifExcluir = False
                                     while verifExcluir == False:
                                         os.system('cls' if os.name == 'nt' else 'clear')
-                                        auxCpf
+                                        auxCpf = ''
                                         for cpf in passageiros:
                                             if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
                                                 auxCpf = cpf
@@ -1236,6 +1233,7 @@ Escolha uma das opções a baixo:
                                             verifExcluir = True
 
                                     if excluir == 'S':
+                                        listaCpfApagar = []
                                         for cpf in passageiros:
                                             if cpfAlterar in passageiros[cpf]['acompanhante'].keys():
                                                 listaCpfApagar.append(cpf)
@@ -2236,6 +2234,7 @@ Escolha uma das opções a baixo:
                                                                                 }
                                                                                 listaPassagens.append(passagem)
                                                                                 listaPassageirosIncluidos.append(cpfAcompanhanteFormatado)
+                                                                                print
                                                                                 contCadastroViagem += 1
                                                                                 continue
                                                                             else:
@@ -2855,8 +2854,11 @@ Escolha uma das opções a baixo:
                                                                 os.system('cls' if os.name == 'nt' else 'clear')
                                                                 continue
                                                     print(f'===================')
-                                                    print(f'Passageiros incluídos no voo: {codVoo}!')
-                                                    print(f'Quantidade de passagens compradas: {contCadastroViagem}')
+                                                    for cpf in listaPassageirosIncluidos:
+                                                        if cpf in passageiros[cpfVendaFormatado]['acompanhante']:
+                                                            print(f'{passageiros[cpfVendaFormatado]['acompanhante'][cpf]['nome']} foi incluido no voo: {codVoo}, como acompanhante de {passageiros[cpfVendaFormatado]['nome']}')     
+                                                        else:                                                           
+                                                            print(f'{passageiros[cpf]['nome']} foi incluido no voo: {codVoo}')
                                                     print(f'===================')
                                                     input(f'Pressione ENTER para continuar..')
                                                     os.system('cls' if os.name == 'nt' else 'clear')
@@ -3098,14 +3100,15 @@ Escolha uma das opções a baixo:
                                                     for passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
                                                         if passagemAcompanhante.find(codVooCancelar) != -1:
                                                             listaAuxPassagensAcompanhantesCancelar.append(passagemAcompanhante)
-                                                            dicPassagensAcompanhantesCancelar[cpf][cpfAcompanhante] = listaAuxPassagensAcompanhantesCancelar
+                                                    dicPassagensAcompanhantesCancelar[cpf][cpfAcompanhante] = listaAuxPassagensAcompanhantesCancelar
 
                                     for cpf in dicPassagensAcompanhantesCancelar:
                                         for cpfAcompanhante in dicPassagensAcompanhantesCancelar[cpf]:
                                             for passagemAcompanhante in listaAuxPassagensAcompanhantesCancelar:
                                                 if passagemAcompanhante in passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens']:
                                                     del passageiros[cpf]['acompanhante'][cpfAcompanhante]['passagens'][passagemAcompanhante]
-                                                if passagem in listaPassagens:
+                                    
+                                                if passagem in listaPassagens:        
                                                     listaPassagens.remove(passagem)
                                 if codVooCancelar in dicPassagensVoos:
                                     del dicPassagensVoos[codVooCancelar]
